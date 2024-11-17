@@ -1,0 +1,130 @@
+﻿<Window x:Class="POS_Emulator.winMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS_Emulator"
+        mc:Ignorable="d"
+        Title="POS Emulator" Height="450" Width="800" Loaded="Window_Loaded">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" FontSize="16">
+            <MenuItem Header="File">
+                <MenuItem Header="Open Log File"/>
+                <MenuItem Header="Auto Save KML"/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Tool">
+                <MenuItem Header="Serial Config"/>
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" x:Name="ViewerGRID">
+                <local:cntPOS Margin="5"/>
+            </Grid>
+            <Grid Grid.Row="1" x:Name="WriterGRID">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox Grid.Row="0" Grid.Column="0" Margin="5"><local:cntLaLinput x:Name="POSITION"/></Viewbox>
+                <Grid Grid.Row="1" Grid.Column="0" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Long Accel"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Tran Accel"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Down Accel"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[m/s^2]"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[m/s^2]"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[m/s^2]"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_LongAccel" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_TranAccel" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_DownAccel" MinWidth="70"/></Viewbox>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Roll"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Pitch"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Heading"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[degree]"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[degree]"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[degree]"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_1" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_2" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_3" MinWidth="70"/></Viewbox>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Time"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Speed"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Track"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[m/s]"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[degree]"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"><Label x:Name="LABEL_Time" Content="0d 00:00:00.000000" /></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_5" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_6" MinWidth="70"/></Viewbox>
+                </Grid>
+                
+                
+                
+                
+            </Grid>
+            <Grid Grid.Row="2" x:Name="ControlGRID">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Viewbox Grid.Row="0" Margin="5"><Slider x:Name="SLIDER" Minimum="0" Maximum="100" MinWidth="500" TickPlacement="BottomRight" TickFrequency="2" Foreground="Black" ValueChanged="SLIDER_ValueChanged"/></Viewbox>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Margin="5" Click="StartButton_Click"><Button.Content><Viewbox><Image Source="/img/Play.png"/></Viewbox></Button.Content></Button>
+                    <Button Grid.Column="1" Margin="5" Click="PauseButton_Click"><Button.Content><Viewbox><Image Source="/img/Pause.png"/></Viewbox></Button.Content></Button>
+                    <Button Grid.Column="2" Margin="5" Click="StopButton_Click"><Button.Content><Viewbox><Image Source="/img/Stop.png"/></Viewbox></Button.Content></Button>
+                    <Button Grid.Column="4" Margin="5" Click="DecreasSpeedButton_Click"><Button.Content><Viewbox><Image Source="/img/DecreasSpeed.png"/></Viewbox></Button.Content></Button>
+                    <Button Grid.Column="5" Margin="5" Click="IncreasSpeedButton_Click"><Button.Content><Viewbox><Image Source="/img/IncreasSpeed.png"/></Viewbox></Button.Content></Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

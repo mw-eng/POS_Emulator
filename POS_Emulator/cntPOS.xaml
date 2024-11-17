@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="POS_Emulator.cntPOS"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:POS_Emulator"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="750">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type Label}" x:Key="LABEL">
+                <Setter Property="FontFamily" Value="UD Digi Kyokasho N-R"/>
+                <Setter Property="MinWidth" Value="120"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Viewbox Grid.Row="0" Grid.Column="0">
+            <GroupBox Header="Position">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Row="0" Grid.Column="0"><Label Content="Latitude              " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="0"><Label Content="Longitude             " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="0"><Label Content="Altitude [m]          " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="1"><Label x:Name="LATITUDE_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><Label x:Name="LONGITUDE_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><Label x:Name="ALTITUDE_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                </Grid>
+            </GroupBox>
+        </Viewbox>
+        <Viewbox Grid.Row="0" Grid.Column="1">
+            <GroupBox Header="Attitude">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Row="0" Grid.Column="0"><Label Content="Roll    [deg]         " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="0"><Label Content="Pitch   [deg]         " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="0"><Label Content="Heading [deg]         " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="1"><Label x:Name="ROLL_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><Label x:Name="PITCH_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><Label x:Name="HEADING_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                </Grid>
+            </GroupBox>
+        </Viewbox>
+        <Viewbox Grid.Row="1" Grid.Column="0">
+            <GroupBox Header="Accel">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Row="0" Grid.Column="0"><Label Content="Long Accel [m/s^2]    " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="0"><Label Content="Tran Accel [m/s^2]    " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="0"><Label Content="Down Accel [m/s^2]    " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="1"><Label x:Name="LONG_ACCEL_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><Label x:Name="TRAN_ACCEL_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><Label x:Name="DOWN_ACCEL_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                </Grid>
+            </GroupBox>
+        </Viewbox>
+        <Viewbox Grid.Row="1" Grid.Column="1">
+            <GroupBox Header="Other">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Row="0" Grid.Column="0"><Label Content="Time of Validity [sec]" Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="0"><Label Content="Speed [m/s]           " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="0"><Label Content="Track [deg]          " Style="{StaticResource LABEL}"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="1"><Label x:Name="TIME_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><Label x:Name="SPEED_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><Label x:Name="TRACK_LABEL" Content="ND" Style="{StaticResource LABEL}" HorizontalContentAlignment="Center"/></Viewbox>
+                </Grid>
+            </GroupBox>
+        </Viewbox>
+    </Grid>
+</UserControl>

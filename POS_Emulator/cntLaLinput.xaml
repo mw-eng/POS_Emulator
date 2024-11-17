@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="POS_Emulator.cntLaLinput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:POS_Emulator"
+             mc:Ignorable="d" 
+             d:DesignHeight="75" d:DesignWidth="230">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type TextBlock}" x:Key="TEXTBLOCK">
+                <Setter Property="FontFamily" Value="UD Digi Kyokasho N-R"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}" x:Key="TEXTBOX">
+                <Setter Property="FontFamily" Value="UD Digi Kyokasho N-R"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            </Style>
+            <Style TargetType="{x:Type ComboBox}" x:Key="CHECKBOX">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="55"/>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="2"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Latitude" Style="{StaticResource TEXTBLOCK}"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Longitude" Style="{StaticResource TEXTBLOCK}"/>
+        <Grid Grid.Row="0" Grid.Column="2" MinHeight="22" MinWidth="130" MaxHeight="22" MaxWidth="130">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="9"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="9"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="7"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="LATITUDE_DEGREE_TEXTBOX" MinWidth="25" MaxWidth="25" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="LATITUDE_DEGREE_TEXTBOX_PreviewExecuted" PreviewTextInput="LATITUDE_DEGREE_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBlock Grid.Column="1" Text="°" Style="{StaticResource TEXTBLOCK}"/>
+            <TextBox Grid.Column="2" x:Name="LATITUDE_MINUTES_TEXTBOX" MinWidth="20" MaxWidth="20" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="MINUTES_TEXTBOX_PreviewExecuted" PreviewTextInput="MINUTES_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBlock Grid.Column="3" Style="{StaticResource TEXTBLOCK}">&apos;</TextBlock>
+            <TextBox Grid.Column="4" x:Name="LATITUDE_SECOND_TEXTBOX" MinWidth="60" MaxWidth="60" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="SECOND_TEXTBOX_PreviewExecuted" PreviewTextInput="SECOND_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBlock Grid.Column="5" Style="{StaticResource TEXTBLOCK}">&quot;</TextBlock>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2" MinHeight="22" MinWidth="130" MaxHeight="22" MaxWidth="130">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="9"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="9"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="7"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="LONGITUDE_DEGREE_TEXTBOX" MinWidth="25" MaxWidth="25" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="LONGITUDE_DEGREE_TEXTBOX_PreviewExecuted" PreviewTextInput="LONGITUDE_DEGREE_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBlock Grid.Column="1" Text="°" Style="{StaticResource TEXTBLOCK}"/>
+            <TextBox Grid.Column="2" x:Name="LONGITUDE_MINUTES_TEXTBOX" MinWidth="20" MaxWidth="20" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="MINUTES_TEXTBOX_PreviewExecuted" PreviewTextInput="MINUTES_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBlock Grid.Column="3" Style="{StaticResource TEXTBLOCK}">&apos;</TextBlock>
+            <TextBox Grid.Column="4" x:Name="LONGITUDE_SECOND_TEXTBOX" MinWidth="60" MaxWidth="60" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="SECOND_TEXTBOX_PreviewExecuted" PreviewTextInput="SECOND_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBlock Grid.Column="5" Style="{StaticResource TEXTBLOCK}">&quot;</TextBlock>
+        </Grid>
+        <ComboBox Grid.Row="0" Grid.Column="3" MaxHeight="23" x:Name="LATITUDE_COMBOBOX" SelectedIndex="0" Style="{StaticResource CHECKBOX}">
+            <ComboBoxItem>
+                <TextBlock Text="N"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock Text="S"/>
+            </ComboBoxItem>
+        </ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="3" MaxHeight="23" x:Name="LONGITUDE_COMBOBOX" SelectedIndex="0" Style="{StaticResource CHECKBOX}">
+            <ComboBoxItem>
+                <TextBlock Text="E"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock Text="W"/>
+            </ComboBoxItem>
+        </ComboBox>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="Altitude" Style="{StaticResource TEXTBLOCK}"/>
+        <TextBox Grid.Row="2" Grid.Column="2" x:Name="ALTITUDE_TEXTBOX" MinWidth="130" MaxWidth="130" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="FLOAT_TEXTBOX_PreviewExecuted" PreviewTextInput="FLOAT_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+        <TextBlock Grid.Row="2" Grid.Column="3" Text="[m]" Style="{StaticResource TEXTBLOCK}"/>
+    </Grid>
+</UserControl>
