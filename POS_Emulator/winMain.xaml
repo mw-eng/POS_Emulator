@@ -9,12 +9,12 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" FontSize="16">
             <MenuItem Header="File">
-                <MenuItem Header="Open Log File"/>
-                <MenuItem Header="Auto Save KML"/>
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="Open Log File" Checked="OpenLogFile_Checked"/>
+                <MenuItem Header="Auto Save KML" Checked="SaveKML_Checked"/>
+                <MenuItem Header="Exit" Checked="Exit_Checked"/>
             </MenuItem>
             <MenuItem Header="Tool">
-                <MenuItem Header="Serial Config"/>
+                <MenuItem Header="Serial Config" Checked="SerialConfig_Checked"/>
             </MenuItem>
         </Menu>
         <Grid DockPanel.Dock="Bottom">
