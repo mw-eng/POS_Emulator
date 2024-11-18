@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="POS_Emulator.cntTextBoxDouble"
+﻿<UserControl x:Class="POS_Emulator.cntTextBoxLong"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="100">
     <Grid>
-        <TextBox x:Name="TEXTBOX_VALUE" FontFamily="UD Digi Kyokasho N-R" Text="0.0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" PreviewTextInput="TextBox_PreviewTextInput" PreviewLostKeyboardFocus="TextBox_PreviewLostKeyboardForcus"/>
+        <TextBox x:Name="TEXTBOX_VALUE" FontFamily="UD Digi Kyokasho N-R" Text="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" PreviewTextInput="TextBox_PreviewTextInput" PreviewLostKeyboardFocus="TextBox_PreviewLostKeyboardForcus"/>
     </Grid>
 </UserControl>

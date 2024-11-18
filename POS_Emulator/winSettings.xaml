@@ -5,8 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS_Emulator"
         mc:Ignorable="d"
-        Title="winSettings" Height="450" Width="800" Icon="/img/Settings.ico">
+        Title="winSettings" Height="300" Width="500" Icon="/img/Settings.ico" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Serial Port"/></Viewbox>
+            <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Baud Rate"/></Viewbox>
+            <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Cycle"/></Viewbox>
+            <Viewbox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" >
+                <ComboBox MinWidth="150" x:Name="COMBOBOX_SerialPort" Margin="5" VerticalContentAlignment="Center" DropDownOpened="COMBOBOX_SerialPort_DropDownOpened" DropDownClosed="COMBOBOX_SerialPort_DropDownClosed"/>
+            </Viewbox>
+            <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxLong x:Name="TEXTBOX_BaudRate" MinWidth="70"/></Viewbox>
+            <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxLong x:Name="TEXTBOX_Cycle" MinWidth="70"/></Viewbox>
+            <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"><Label Content="bps"/></Viewbox>
+            <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left"><Label Content="Hz"/></Viewbox>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" x:Name="OK_BUTTON" Click="OK_BUTTON_Click" Margin="10">
+                <Button.Content>
+                    <Viewbox>
+                        <TextBlock Text="OK"/>
+                    </Viewbox>
+                </Button.Content>
+            </Button>
+            <Button Grid.Column="1" x:Name="Cancel_BUTTON" Click="Cancel_BUTTON_Click" Margin="10">
+                <Button.Content>
+                    <Viewbox>
+                        <TextBlock Text="Cancel"/>
+                    </Viewbox>
+                </Button.Content>
+            </Button>
+        </Grid>
     </Grid>
 </Window>

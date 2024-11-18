@@ -7,12 +7,12 @@ using System.Windows.Input;
 namespace POS_Emulator
 {
     /// <summary>
-    /// cntTextBoxDouble.xaml の相互作用ロジック
+    /// cntTextBoxLong.xaml の相互作用ロジック
     /// </summary>
-    public partial class cntTextBoxDouble : UserControl
+    public partial class cntTextBoxLong : UserControl
     {
-        private double _val;
-        public double Value
+        private long _val;
+        public long Value
         {
             get
             {
@@ -24,9 +24,9 @@ namespace POS_Emulator
                 Dispatcher.BeginInvoke(new Action(() => { TEXTBOX_VALUE.Text = value.ToString(); }));
             }
         }
-        public double MinimumValue;
-        public double MaximumValue;
-        public cntTextBoxDouble(double min, double max, double val)
+        public long MinimumValue;
+        public long MaximumValue;
+        public cntTextBoxLong(long min, long max, long val)
         {
             InitializeComponent();
             MinimumValue = min;
@@ -34,12 +34,12 @@ namespace POS_Emulator
             Value = val;
         }
 
-        public cntTextBoxDouble() : this(double.MinValue, double.MaxValue, 0.0) { }
+        public cntTextBoxLong() : this(long.MinValue, long.MaxValue, 0) { }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // 0-9のみ
-            e.Handled = !new Regex("[0-9|.|-]").IsMatch(e.Text);
+            e.Handled = !new Regex("[0-9|-]").IsMatch(e.Text);
         }
 
         private void TextBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace POS_Emulator
                 string strTXT = Clipboard.GetText();
                 for (int cnt = 0; cnt < strTXT.Length; cnt++)
                 {
-                    if (!new Regex("[0-9|.]|[ ]").IsMatch(strTXT[cnt].ToString()))
+                    if (!new Regex("[0-9]|[ ]").IsMatch(strTXT[cnt].ToString()))
                     {
                         // 処理済み
                         e.Handled = true;
@@ -64,7 +64,7 @@ namespace POS_Emulator
         {
             try
             {
-                double val = double.Parse(((TextBox)sender).Text);
+                long val = long.Parse(((TextBox)sender).Text);
                 if (MinimumValue <= val && val <= MaximumValue) { _val = val; return; }
                 MessageBox.Show("Enter in the range " + MinimumValue.ToString() + " to " + MaximumValue.ToString());
                 e.Handled = true;

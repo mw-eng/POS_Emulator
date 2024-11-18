@@ -54,6 +54,9 @@
     <Compile Include="clsGPS.cs" />
     <Compile Include="clsKML.cs" />
     <Compile Include="clsSearchList.cs" />
+    <Compile Include="cntTextBoxLong.xaml.cs">
+      <DependentUpon>cntTextBoxLong.xaml</DependentUpon>
+    </Compile>
     <Compile Include="winSettings.xaml.cs">
       <DependentUpon>winSettings.xaml</DependentUpon>
     </Compile>
@@ -64,6 +67,10 @@
     <Page Include="cntPOS.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="cntTextBoxLong.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="cntTextBoxDouble.xaml">
       <SubType>Designer</SubType>

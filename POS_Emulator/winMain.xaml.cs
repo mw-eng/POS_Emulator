@@ -178,7 +178,12 @@ namespace POS_Emulator
 
         private void SerialConfig_Click(object sender, RoutedEventArgs e)
         {
-
+            POS_OUTPUT_TASK_Stop(true);
+            if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
+            winSettings win = new winSettings();
+            win.ShowDialog();
+            SerialReOpen();
+            POS_OUTPUT_TASK_Start();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
