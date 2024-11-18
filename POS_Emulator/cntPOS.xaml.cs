@@ -14,8 +14,8 @@ namespace POS_Emulator
             get { return _data; }
             set
             {
+                _data = value;
                 Dispatcher.BeginInvoke(new Action(() => {
-                    _data = value;
                     if (value != null)
                     {
                         int day = (int)Math.Truncate(_data.TIME / 24 / 60 / 60);

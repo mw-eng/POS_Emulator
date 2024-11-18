@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Navigation;
 
 namespace POS_Emulator
 {
@@ -23,6 +26,11 @@ namespace POS_Emulator
         private DateTime _posExNOW;
         private bool _posExTASKstate;
         private Task _posExTASK;
+        private List<List<byte>> _logDAT = new List<List<byte>>();
+        private DateTime _logPlayNOW;
+        private bool? _logPlayTASKstate = false;
+        private Task _logPlayTASK;
+        private UInt16 _logPlayCycle;
 
         public winMain()
         {
@@ -35,55 +43,7 @@ namespace POS_Emulator
             Properties.Settings.Default.Reset();
             this.Title += "_DEBUG MODE";
 #endif
-            if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
-            ShowSerialPortName.SerialPortTable sp;
-            if(!ShowSerialPortName.SearchDeviceCaption(Properties.Settings.Default.spCaption, out sp))
-            {
-                if(MessageBox.Show("No serial port exists.\nClose the app?","Question",MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    this.Close();
-                    return;
-                }
-                else
-                {
-                    winSettings win = new winSettings();
-                    win.ShowDialog();
-                    Window_Loaded(sender, e);
-                    return;
-                }
-            }
-            _serial = new SerialPort(sp.Name);
-            _serial.BaudRate = Properties.Settings.Default.spBaudRate;
-            _serial.DataBits = 8;
-            _serial.Parity = Parity.None;
-            _serial.StopBits = StopBits.One;
-            _serial.Handshake = Handshake.None;
-            _serial.DtrEnable = true;
-            _serial.Encoding = Encoding.ASCII;
-            _serial.NewLine = "\r\n";
-            _serial.ReadBufferSize = 1024;
-            _serial.WriteTimeout = 1000;
-            _serial.ReadTimeout = 1000;
-            try
-            {
-                _serial.Open();
-            }
-            catch
-            {
-                if (MessageBox.Show("Failed to open serial port.\nClose the app?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
-                {
-                    this.Close();
-                    return;
-                }
-                else
-                {
-                    winSettings win = new winSettings();
-                    win.ShowDialog();
-                    Window_Loaded(sender, e);
-                    return;
-                }
-            }
-
+            SerialReOpen();
             TEXTBOX_Roll.MinimumValue = -180;
             TEXTBOX_Roll.MaximumValue = 180;
             TEXTBOX_Pitch.MinimumValue = -180;
@@ -120,42 +80,80 @@ namespace POS_Emulator
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _logPlayCycle = (UInt16)Math.Truncate((1.0 / Properties.Settings.Default.spCycle) * 1000);
+            if (_logPlayTASKstate == false) { LOG_PLAY_TASK_START(); }
+            else if(_logPlayTASKstate == null) { LOG_PLAY_TASK_Restart(); }
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-
+            LOG_PLAY_TASK_Pause();
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-
+            LOG_PLAY_TASK_Stop(true);
+            SLIDER.Value = 0;
         }
 
         private void DecreasSpeedButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try { _logPlayCycle *= 2; } catch { }
         }
 
         private void IncreasSpeedButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void WriteButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            _logPlayCycle /= 2;
+            if(_logPlayCycle == 0) { _logPlayCycle = 1; }
         }
 
         private void SLIDER_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            try
+            {
+                LOGDATA_NOW.DATA = new POS.PAST2(_logDAT[(int)Math.Round(SLIDER.Value, MidpointRounding.AwayFromZero)]);
+            }
+            catch
+            {
 
+            }
         }
 
         private void OpenLogFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "log file|*.log|binary file|*.bin|All File|*.*";
+            ofd.FilterIndex = 0;
+            if(ofd.ShowDialog() != true)
+            {
+                return;
+            }
+            List<List<byte>> dat = new List<List<byte>>();
+            List<byte> byBF = System.IO.File.ReadAllBytes(ofd.FileName).ToList();
+            int posi_n = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 });
+            int posi_n1 = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 }, posi_n + 1);
+            while(posi_n >=0 && posi_n1 >= 0)
+            {
+                dat.Add(byBF.GetRange(posi_n, posi_n1 - posi_n));
+                posi_n = posi_n1;
+                posi_n1 = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 }, posi_n + 1);
+            }
+            if (dat.Count() == 0)
+            {
+                MessageBox.Show("Failed to read file.","Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                return;
+            }
+            POS_OUTPUT_TASK_Stop(true);
+            _logDAT = dat;
+            MainGRID.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
+            MainGRID.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Star);
+            MainGRID.RowDefinitions[2].Height = new GridLength(100, GridUnitType.Pixel);
+            SLIDER.Maximum = _logDAT.Count();
+            SLIDER.Value = 0;
+            SLIDER.TickFrequency = _logDAT.Count() / 50;
+            LOGDATA_NOW.DATA = new POS.PAST2(_logDAT[(int)Math.Round(SLIDER.Value, MidpointRounding.AwayFromZero)]);
+            _logView = true;
+            POS_OUTPUT_TASK_Start();
         }
 
         private void SaveKML_Click(object sender, RoutedEventArgs e)
@@ -165,12 +163,23 @@ namespace POS_Emulator
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void SerialConfig_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                LOG_PLAY_TASK_Stop(false);
+                POS_OUTPUT_TASK_Stop(false);
+                if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
+            }
+            catch { }
         }
 
         private void POS_OUTPUT_TASK_Start()
@@ -231,14 +240,99 @@ namespace POS_Emulator
             }
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void LOG_PLAY_TASK_START()
         {
+            _logPlayTASKstate = true;
+            _logPlayTASK = Task.Factory.StartNew(() => { POS_PLAY_TASK(); });
+        }
+
+        private void LOG_PLAY_TASK_Stop(bool wait)
+        {
+            _logPlayTASKstate = false;
+            if (wait)
+            {
+                _logPlayTASK?.ConfigureAwait(false);
+                _logPlayTASK?.Wait();
+            }
+            _logPlayTASK.Dispose();
+            _logPlayTASK = null;
+        }
+
+        private void LOG_PLAY_TASK_Pause()
+        {
+            _logPlayTASKstate = null;
+        }
+        private void LOG_PLAY_TASK_Restart()
+        {
+            _logPlayTASKstate = true;
+        }
+
+        private void POS_PLAY_TASK()
+        {
+            while (_logPlayTASKstate != false)
+            {
+                while (_logPlayTASKstate == null) { Thread.Sleep(taskLoopSleep); }
+                _logPlayNOW = DateTime.Now;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (SLIDER.Value >= SLIDER.Maximum) { _logPlayTASKstate = false; return; }
+                    SLIDER.Value++;
+                }));
+                while (_logPlayTASKstate != false && (DateTime.Now - _logPlayNOW).Milliseconds < _logPlayCycle) { Thread.Sleep(taskLoopSleep); }
+            }
+        }
+
+        private void SerialReOpen()
+        {
+            if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
+            ShowSerialPortName.SerialPortTable sp;
+            if (!ShowSerialPortName.SearchDeviceCaption(Properties.Settings.Default.spCaption, out sp))
+            {
+                if (MessageBox.Show("No serial port exists.\nClose the app?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    this.Close();
+                    return;
+                }
+                else
+                {
+                    winSettings win = new winSettings();
+                    win.ShowDialog();
+                    SerialReOpen();
+                    return;
+                }
+            }
+            _serial = new SerialPort(sp.Name);
+            _serial.BaudRate = Properties.Settings.Default.spBaudRate;
+            _serial.DataBits = 8;
+            _serial.Parity = Parity.None;
+            _serial.StopBits = StopBits.One;
+            _serial.Handshake = Handshake.None;
+            _serial.DtrEnable = true;
+            _serial.Encoding = Encoding.ASCII;
+            _serial.NewLine = "\r\n";
+            _serial.ReadBufferSize = 1024;
+            _serial.WriteTimeout = 1000;
+            _serial.ReadTimeout = 1000;
             try
             {
-                POS_OUTPUT_TASK_Stop(false);
-                if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
+                _serial.Open();
             }
-            catch { }
+            catch
+            {
+                if (MessageBox.Show("Failed to open serial port.\nClose the app?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                {
+                    this.Close();
+                    return;
+                }
+                else
+                {
+                    winSettings win = new winSettings();
+                    win.ShowDialog();
+                    SerialReOpen();
+                    return;
+                }
+            }
         }
+
     }
 }
