@@ -3,9 +3,45 @@
   <Profiles />
   <Settings>
     <Setting Name="spCaption" Type="System.String" Scope="User">
-      <Value Profile="(Default)">USB シリアル デバイス (COM8)</Value>
+      <Value Profile="(Default)">USB Serial Port (COM10)</Value>
     </Setting>
     <Setting Name="spBaudRate" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">115200</Value>
+    </Setting>
+    <Setting Name="spCycle" Type="System.SByte" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="posRoll" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="posPitch" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="posHeading" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="posLatitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">36.09266</Value>
+    </Setting>
+    <Setting Name="posLongitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">138.163956</Value>
+    </Setting>
+    <Setting Name="posAltitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1666.6</Value>
+    </Setting>
+    <Setting Name="posSpeed" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="posTrack" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="posLongAccel" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="posTranAccel" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="posDownAccel" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

@@ -48,11 +48,11 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="7"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" x:Name="LATITUDE_DEGREE_TEXTBOX" MinWidth="25" MaxWidth="25" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="LATITUDE_DEGREE_TEXTBOX_PreviewExecuted" PreviewTextInput="LATITUDE_DEGREE_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBox Grid.Column="0" x:Name="LATITUDE_DEGREE_TEXTBOX" MinWidth="25" MaxWidth="25" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="LATITUDE_DEGREE_TEXTBOX_PreviewExecuted" PreviewTextInput="LATITUDE_DEGREE_TEXTBOX_PreviewTextInput" PreviewLostKeyboardFocus="LATITUDE_TEXTBOX_PreviewLostKeyboardForcus" GotFocus="TEXTBOX_GotFocus"/>
             <TextBlock Grid.Column="1" Text="°" Style="{StaticResource TEXTBLOCK}"/>
-            <TextBox Grid.Column="2" x:Name="LATITUDE_MINUTES_TEXTBOX" MinWidth="20" MaxWidth="20" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="MINUTES_TEXTBOX_PreviewExecuted" PreviewTextInput="MINUTES_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBox Grid.Column="2" x:Name="LATITUDE_MINUTES_TEXTBOX" MinWidth="20" MaxWidth="20" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="MINUTES_TEXTBOX_PreviewExecuted" PreviewTextInput="MINUTES_TEXTBOX_PreviewTextInput" PreviewLostKeyboardFocus="LATITUDE_TEXTBOX_PreviewLostKeyboardForcus" GotFocus="TEXTBOX_GotFocus"/>
             <TextBlock Grid.Column="3" Style="{StaticResource TEXTBLOCK}">&apos;</TextBlock>
-            <TextBox Grid.Column="4" x:Name="LATITUDE_SECOND_TEXTBOX" MinWidth="60" MaxWidth="60" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="SECOND_TEXTBOX_PreviewExecuted" PreviewTextInput="SECOND_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBox Grid.Column="4" x:Name="LATITUDE_SECOND_TEXTBOX" MinWidth="60" MaxWidth="60" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="SECOND_TEXTBOX_PreviewExecuted" PreviewTextInput="SECOND_TEXTBOX_PreviewTextInput" PreviewLostKeyboardFocus="LATITUDE_TEXTBOX_PreviewLostKeyboardForcus" GotFocus="TEXTBOX_GotFocus"/>
             <TextBlock Grid.Column="5" Style="{StaticResource TEXTBLOCK}">&quot;</TextBlock>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2" MinHeight="22" MinWidth="130" MaxHeight="22" MaxWidth="130">
@@ -64,14 +64,14 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="7"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" x:Name="LONGITUDE_DEGREE_TEXTBOX" MinWidth="25" MaxWidth="25" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="LONGITUDE_DEGREE_TEXTBOX_PreviewExecuted" PreviewTextInput="LONGITUDE_DEGREE_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBox Grid.Column="0" x:Name="LONGITUDE_DEGREE_TEXTBOX" MinWidth="25" MaxWidth="25" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="LONGITUDE_DEGREE_TEXTBOX_PreviewExecuted" PreviewTextInput="LONGITUDE_DEGREE_TEXTBOX_PreviewTextInput" PreviewLostKeyboardFocus="LONGITUDE_TEXTBOX_PreviewLostKeyboardForcus" GotFocus="TEXTBOX_GotFocus"/>
             <TextBlock Grid.Column="1" Text="°" Style="{StaticResource TEXTBLOCK}"/>
-            <TextBox Grid.Column="2" x:Name="LONGITUDE_MINUTES_TEXTBOX" MinWidth="20" MaxWidth="20" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="MINUTES_TEXTBOX_PreviewExecuted" PreviewTextInput="MINUTES_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBox Grid.Column="2" x:Name="LONGITUDE_MINUTES_TEXTBOX" MinWidth="20" MaxWidth="20" Text="0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="MINUTES_TEXTBOX_PreviewExecuted" PreviewTextInput="MINUTES_TEXTBOX_PreviewTextInput" PreviewLostKeyboardFocus="LONGITUDE_TEXTBOX_PreviewLostKeyboardForcus" GotFocus="TEXTBOX_GotFocus"/>
             <TextBlock Grid.Column="3" Style="{StaticResource TEXTBLOCK}">&apos;</TextBlock>
-            <TextBox Grid.Column="4" x:Name="LONGITUDE_SECOND_TEXTBOX" MinWidth="60" MaxWidth="60" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="SECOND_TEXTBOX_PreviewExecuted" PreviewTextInput="SECOND_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+            <TextBox Grid.Column="4" x:Name="LONGITUDE_SECOND_TEXTBOX" MinWidth="60" MaxWidth="60" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="SECOND_TEXTBOX_PreviewExecuted" PreviewTextInput="SECOND_TEXTBOX_PreviewTextInput" PreviewLostKeyboardFocus="LONGITUDE_TEXTBOX_PreviewLostKeyboardForcus" GotFocus="TEXTBOX_GotFocus"/>
             <TextBlock Grid.Column="5" Style="{StaticResource TEXTBLOCK}">&quot;</TextBlock>
         </Grid>
-        <ComboBox Grid.Row="0" Grid.Column="3" MaxHeight="23" x:Name="LATITUDE_COMBOBOX" SelectedIndex="0" Style="{StaticResource CHECKBOX}">
+        <ComboBox Grid.Row="0" Grid.Column="3" MaxHeight="23" x:Name="LATITUDE_COMBOBOX" SelectedIndex="0" Style="{StaticResource CHECKBOX}" SelectionChanged="LATITUDE_COMBOBOX_SelectionChanged" >
             <ComboBoxItem>
                 <TextBlock Text="N"/>
             </ComboBoxItem>
@@ -79,7 +79,7 @@
                 <TextBlock Text="S"/>
             </ComboBoxItem>
         </ComboBox>
-        <ComboBox Grid.Row="1" Grid.Column="3" MaxHeight="23" x:Name="LONGITUDE_COMBOBOX" SelectedIndex="0" Style="{StaticResource CHECKBOX}">
+        <ComboBox Grid.Row="1" Grid.Column="3" MaxHeight="23" x:Name="LONGITUDE_COMBOBOX" SelectedIndex="0" Style="{StaticResource CHECKBOX}" SelectionChanged="LONGITUDE_COMBOBOX_SelectionChanged">
             <ComboBoxItem>
                 <TextBlock Text="E"/>
             </ComboBoxItem>
@@ -88,7 +88,7 @@
             </ComboBoxItem>
         </ComboBox>
         <TextBlock Grid.Row="2" Grid.Column="1" Text="Altitude" Style="{StaticResource TEXTBLOCK}"/>
-        <TextBox Grid.Row="2" Grid.Column="2" x:Name="ALTITUDE_TEXTBOX" MinWidth="130" MaxWidth="130" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="FLOAT_TEXTBOX_PreviewExecuted" PreviewTextInput="FLOAT_TEXTBOX_PreviewTextInput" GotFocus="TEXTBOX_GotFocus"/>
+        <TextBox Grid.Row="2" Grid.Column="2" x:Name="ALTITUDE_TEXTBOX" MinWidth="130" MaxWidth="130" Text="0.0" Style="{StaticResource TEXTBOX}" CommandManager.PreviewExecuted="FLOAT_TEXTBOX_PreviewExecuted" PreviewTextInput="FLOAT_TEXTBOX_PreviewTextInput" PreviewLostKeyboardFocus="ALTITUDE_TEXTBOX_PreviewLostKeyboardForcus" GotFocus="TEXTBOX_GotFocus"/>
         <TextBlock Grid.Row="2" Grid.Column="3" Text="[m]" Style="{StaticResource TEXTBLOCK}"/>
     </Grid>
 </UserControl>

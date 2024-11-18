@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,7 +11,19 @@ namespace POS_Emulator
     /// </summary>
     public partial class cntTextBoxDouble : UserControl
     {
-        public double Value { get { return double.Parse(TEXTBOX_DOUBLE.Text); } set { TEXTBOX_DOUBLE.Text = value.ToString(); } }
+        private double _val;
+        public double Value
+        {
+            get
+            {
+                return _val;
+            }
+            set
+            {
+                _val = value;
+                Dispatcher.BeginInvoke(new Action(() => { TEXTBOX_DOUBLE.Text = value.ToString(); }));
+            }
+        }
         public double MinimumValue;
         public double MaximumValue;
         public cntTextBoxDouble(double min, double max, double val)
@@ -52,7 +65,7 @@ namespace POS_Emulator
             try
             {
                 double val = double.Parse(((TextBox)sender).Text);
-                if (MinimumValue <= val && val <= MaximumValue) { return; }
+                if (MinimumValue <= val && val <= MaximumValue) { _val = val; return; }
                 MessageBox.Show("Enter in the range " + MinimumValue.ToString() + " to " + MaximumValue.ToString());
                 e.Handled = true;
             }

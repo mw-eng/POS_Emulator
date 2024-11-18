@@ -5,26 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS_Emulator"
         mc:Ignorable="d"
-        Title="POS Emulator" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="POS Emulator" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
     <DockPanel>
         <Menu DockPanel.Dock="Top" FontSize="16">
             <MenuItem Header="File">
-                <MenuItem Header="Open Log File" Checked="OpenLogFile_Checked"/>
-                <MenuItem Header="Auto Save KML" Checked="SaveKML_Checked"/>
-                <MenuItem Header="Exit" Checked="Exit_Checked"/>
+                <MenuItem Header="Open Log File" Click="OpenLogFile_Click"/>
+                <MenuItem Header="Auto Save KML" Click="SaveKML_Click"/>
+                <MenuItem Header="Exit" Click="Exit_Click"/>
             </MenuItem>
             <MenuItem Header="Tool">
-                <MenuItem Header="Serial Config" Checked="SerialConfig_Checked"/>
+                <MenuItem Header="Serial Config" Click="SerialConfig_Click"/>
             </MenuItem>
         </Menu>
-        <Grid DockPanel.Dock="Bottom">
+        <Grid DockPanel.Dock="Bottom" x:Name="MainGRID">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" x:Name="ViewerGRID">
-                <local:cntPOS Margin="5"/>
+                <local:cntPOS Margin="5" x:Name="LOGDATA_NOW"/>
             </Grid>
             <Grid Grid.Row="1" x:Name="WriterGRID">
                 <Grid.RowDefinitions>
@@ -74,9 +74,9 @@
                     <Viewbox Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[degree]"/></Viewbox>
                     <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[degree]"/></Viewbox>
                     <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[degree]"/></Viewbox>
-                    <Viewbox Grid.Row="0" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_1" MinWidth="70"/></Viewbox>
-                    <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_2" MinWidth="70"/></Viewbox>
-                    <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_3" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="0" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_Roll" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_Pitch" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_Heading" MinWidth="70"/></Viewbox>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="1" Margin="5">
                     <Grid.RowDefinitions>
@@ -95,13 +95,9 @@
                     <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[m/s]"/></Viewbox>
                     <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left"><Label Content="[degree]"/></Viewbox>
                     <Viewbox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"><Label x:Name="LABEL_Time" Content="0d 00:00:00.000000" /></Viewbox>
-                    <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_5" MinWidth="70"/></Viewbox>
-                    <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_6" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_Speed" MinWidth="70"/></Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxDouble x:Name="TEXTBOX_Track" MinWidth="70"/></Viewbox>
                 </Grid>
-                
-                
-                
-                
             </Grid>
             <Grid Grid.Row="2" x:Name="ControlGRID">
                 <Grid.RowDefinitions>

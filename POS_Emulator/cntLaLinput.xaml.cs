@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,62 +12,61 @@ namespace POS_Emulator
     /// </summary>
     public partial class cntLaLinput : UserControl
     {
+        private float _latitude;
+        private float _longitude;
+        private float _altitude;
         public float Latitude
         {
             get
             {
-                float deg = float.Parse(LATITUDE_DEGREE_TEXTBOX.Text);
-                float min = float.Parse(LATITUDE_MINUTES_TEXTBOX.Text);
-                float sec = float.Parse(LATITUDE_SECOND_TEXTBOX.Text);
-                if(LATITUDE_COMBOBOX.SelectedIndex == 1) { deg = -deg; }
-                //return deg * 60.0f * 60.0f + min * 60.0f + sec;
-                return deg + (min * 60.0f + sec) / 3600f;
+                return _latitude;
             }
             set
             {
-                //int deg = (int)Math.Truncate(value / 60.0 / 60.0);
-                //int min = (int)Math.Truncate((value - deg * 60.0 * 60.0) / 60.0);
-                //float sec = value - deg * 60.0f * 60.0f - min * 60.0f;
-                int deg = (int)Math.Truncate(value);
-                int min = (int)Math.Truncate((value - deg) * 3600.0 / 60.0);
-                float sec = (value - deg) * 3600.0f - min * 60.0f;
-                if(deg < 0) { LATITUDE_COMBOBOX.SelectedIndex = 1; }
-                else { LATITUDE_COMBOBOX.SelectedIndex = 0; }
-                LATITUDE_DEGREE_TEXTBOX.Text = Math.Abs(deg).ToString();
-                LATITUDE_MINUTES_TEXTBOX.Text = Math.Abs(min).ToString("00");
-                LATITUDE_SECOND_TEXTBOX.Text = Math.Abs(sec).ToString("00.000000");
+                _latitude = value;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    int deg = (int)Math.Truncate(_latitude);
+                    int min = (int)Math.Truncate((_latitude - deg) * 60.0f);
+                    float sec = ((_latitude - deg) * 60.0f - min) * 60.0f;
+                    if (deg < 0) { LATITUDE_COMBOBOX.SelectedIndex = 1; }
+                    else { LATITUDE_COMBOBOX.SelectedIndex = 0; }
+                    LATITUDE_DEGREE_TEXTBOX.Text = Math.Abs(deg).ToString();
+                    LATITUDE_MINUTES_TEXTBOX.Text = Math.Abs(min).ToString("00");
+                    LATITUDE_SECOND_TEXTBOX.Text = Math.Abs(sec).ToString("00.000000");
+                }));
             }
         }
         public float Longitude
         {
             get
             {
-                float deg = float.Parse(LONGITUDE_DEGREE_TEXTBOX.Text);
-                float min = float.Parse(LONGITUDE_MINUTES_TEXTBOX.Text);
-                float sec = float.Parse(LONGITUDE_SECOND_TEXTBOX.Text);
-                if (LONGITUDE_COMBOBOX.SelectedIndex == 1) { deg = -deg; }
-                //return deg * 60.0f * 60.0f + min * 60.0f + sec;
-                return deg + (min * 60.0f + sec) / 3600f;
+                return _longitude;
             }
             set
             {
-                //int deg = (int)Math.Truncate(value / 60.0 / 60.0);
-                //int min = (int)Math.Truncate((value - deg * 60.0 * 60.0) / 60.0);
-                //float sec = value - deg * 60.0f * 60.0f - min * 60.0f;
-                int deg = (int)Math.Truncate(value);
-                int min = (int)Math.Truncate((value - deg) * 3600.0 / 60.0);
-                float sec = (value - deg) * 3600.0f - min * 60.0f;
-                if (deg < 0) { LONGITUDE_COMBOBOX.SelectedIndex = 1; }
-                else { LONGITUDE_COMBOBOX.SelectedIndex = 0; }
-                LONGITUDE_DEGREE_TEXTBOX.Text = Math.Abs(deg).ToString();
-                LONGITUDE_MINUTES_TEXTBOX.Text = Math.Abs(min).ToString("00");
-                LONGITUDE_SECOND_TEXTBOX.Text = Math.Abs(sec).ToString("00.000000");
+                _longitude = value;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    int deg = (int)Math.Truncate(_longitude);
+                    int min = (int)Math.Truncate((_longitude - deg) * 3600.0f / 60.0f);
+                    float sec = (_longitude - deg) * 3600.0f - min * 60.0f;
+                    if (deg < 0) { LONGITUDE_COMBOBOX.SelectedIndex = 1; }
+                    else { LONGITUDE_COMBOBOX.SelectedIndex = 0; }
+                    LONGITUDE_DEGREE_TEXTBOX.Text = Math.Abs(deg).ToString();
+                    LONGITUDE_MINUTES_TEXTBOX.Text = Math.Abs(min).ToString("00");
+                    LONGITUDE_SECOND_TEXTBOX.Text = Math.Abs(sec).ToString("00.000000");
+                }));
             }
         }
         public float Altitude
         {
-            get { return float.Parse(ALTITUDE_TEXTBOX.Text); }
-            set { ALTITUDE_TEXTBOX.Text = value.ToString("0.00"); }
+            get { return _altitude; }
+            set
+            {
+                _altitude = value;
+                Dispatcher.BeginInvoke(new Action(() => { ALTITUDE_TEXTBOX.Text = value.ToString("0.00"); }));
+            }
         }
 
 
@@ -183,7 +183,6 @@ namespace POS_Emulator
                 }
             }
         }
-
         private void MINUTES_TEXTBOX_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             //Only 0 to 9.
@@ -220,7 +219,6 @@ namespace POS_Emulator
                 }
             }
         }
-
         private void SECOND_TEXTBOX_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             //Only 0 to 9.
@@ -252,7 +250,6 @@ namespace POS_Emulator
                 }
             }
         }
-
         private void FLOAT_TEXTBOX_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             //Only 0 to 9.
@@ -263,6 +260,70 @@ namespace POS_Emulator
                 string strBF = tb.Text.Remove(tb.SelectionStart, tb.SelectionLength).Insert(tb.SelectionStart, e.Text);
                 e.Handled = !float.TryParse(strBF, out _);
             }
+        }
+
+
+        private void LATITUDE_TEXTBOX_PreviewLostKeyboardForcus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            try
+            {
+                float val = float.Parse(LATITUDE_DEGREE_TEXTBOX.Text);
+                val += float.Parse(LATITUDE_MINUTES_TEXTBOX.Text) * 60.0f / 3600.0f;
+                val += float.Parse(LATITUDE_SECOND_TEXTBOX.Text) / 3600.0f;
+                if (LATITUDE_COMBOBOX.SelectedIndex == 1) { val *= -1.0f; }
+                if (-90 <= val && val <= 90) { _latitude = val; return; }
+                MessageBox.Show("Enter in the range -90 to 90");
+                e.Handled = true;
+            }
+            catch
+            {
+                MessageBox.Show("Enter in the range -90 to 90");
+                e.Handled = true;
+            }
+
+        }
+        private void LONGITUDE_TEXTBOX_PreviewLostKeyboardForcus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            try
+            {
+                float val = float.Parse(LONGITUDE_DEGREE_TEXTBOX.Text);
+                val += float.Parse(LONGITUDE_MINUTES_TEXTBOX.Text) * 60.0f / 3600.0f;
+                val += float.Parse(LONGITUDE_SECOND_TEXTBOX.Text) / 3600.0f;
+                if (LONGITUDE_COMBOBOX.SelectedIndex == 1) { val *= -1.0f; }
+                if (-180 <= val && val <= 180) { _longitude = val; return; }
+                MessageBox.Show("Enter in the range -180 to 180");
+                e.Handled = true;
+            }
+            catch
+            {
+                MessageBox.Show("Enter in the range -180 to 180");
+                e.Handled = true;
+            }
+        }
+        private void ALTITUDE_TEXTBOX_PreviewLostKeyboardForcus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            try
+            {
+                float val = float.Parse(ALTITUDE_TEXTBOX.Text);
+                if (-1000 <= val && val <= 20000) { _altitude = val; return; }
+                MessageBox.Show("Enter in the range -1000 to 20000");
+                e.Handled = true;
+            }
+            catch
+            {
+                MessageBox.Show("Enter in the range -1000 to 20000");
+                e.Handled = true;
+            }
+        }
+
+        private void LATITUDE_COMBOBOX_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LATITUDE_TEXTBOX_PreviewLostKeyboardForcus(this,null);
+        }
+
+        private void LONGITUDE_COMBOBOX_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LONGITUDE_TEXTBOX_PreviewLostKeyboardForcus(this, null);
         }
     }
 }
