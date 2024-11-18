@@ -1,12 +1,14 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace POS_Emulator
 {
@@ -26,6 +28,10 @@ namespace POS_Emulator
         private bool? _logPlayTASKstate = false;
         private Task _logPlayTASK;
         private UInt16 _logPlayCycle;
+        private string _kmlPath;
+        private DateTime _kmlExNOW;
+        private bool _kmlExTASKstate;
+        private Task _kmlExTASK;
 
         public winMain()
         {
@@ -66,7 +72,7 @@ namespace POS_Emulator
             TEXTBOX_DownAccel.Value = Properties.Settings.Default.posDownAccel;
             this.Title += " Ver," + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
 
-
+            _kmlPath = "";
             _logView = false;
             MainGRID.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Star);
             MainGRID.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
@@ -153,7 +159,16 @@ namespace POS_Emulator
 
         private void SaveKML_Click(object sender, RoutedEventArgs e)
         {
-
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "KML file|*.kml|All File|*.*";
+            sfd.FilterIndex = 0;
+            if (sfd.ShowDialog() != true)
+            {
+                return;
+            }
+            KML_OUTPUT_TASK_Stop(true);
+            _kmlPath = sfd.FileName;
+            KML_OUTPUT_TASK_Start(1000);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -170,6 +185,7 @@ namespace POS_Emulator
         {
             try
             {
+                KML_OUTPUT_TASK_Stop(false);
                 LOG_PLAY_TASK_Stop(false);
                 POS_OUTPUT_TASK_Stop(false);
                 if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
@@ -229,7 +245,7 @@ namespace POS_Emulator
                         return;
                     }
                 }
-                while(_posExTASKstate && (DateTime.Now - _posExNOW).Milliseconds < cycle) { Thread.Sleep(taskLoopSleep); }
+                while(_posExTASKstate && (DateTime.Now - _posExNOW) < TimeSpan.FromMilliseconds(cycle)) { Thread.Sleep(taskLoopSleep); }
             }
         }
 
@@ -257,6 +273,7 @@ namespace POS_Emulator
         {
             _logPlayTASKstate = true;
         }
+
         private void POS_PLAY_TASK()
         {
             while (_logPlayTASKstate != false)
@@ -268,7 +285,58 @@ namespace POS_Emulator
                     if (SLIDER.Value >= SLIDER.Maximum) { _logPlayTASKstate = false; return; }
                     SLIDER.Value++;
                 }));
-                while (_logPlayTASKstate != false && (DateTime.Now - _logPlayNOW).Milliseconds < _logPlayCycle) { Thread.Sleep(taskLoopSleep); }
+                while (_logPlayTASKstate != false && (DateTime.Now - _logPlayNOW) < TimeSpan.FromMilliseconds(_logPlayCycle)) { Thread.Sleep(taskLoopSleep); }
+            }
+        }
+
+        private void KML_OUTPUT_TASK_Start(UInt16 cycle)
+        {
+            _kmlExTASKstate = true;
+            _kmlExTASK = Task.Factory.StartNew(() => { KML_OUTPUT_TASK(cycle); });
+        }
+        private void KML_OUTPUT_TASK_Stop(bool wait)
+        {
+            _kmlExTASKstate = false;
+            if (wait)
+            {
+                _kmlExTASK?.ConfigureAwait(false);
+                _kmlExTASK?.Wait();
+            }
+            _kmlExTASK?.Dispose();
+            _kmlExTASK = null;
+        }
+        private void KML_OUTPUT_TASK(UInt16 cycle)
+        {
+            while (_kmlExTASKstate)
+            {
+                _kmlExNOW = DateTime.Now;
+                float heading, latitude, longitude, altitude;
+
+                if (_logView)
+                {
+                    heading = LOGDATA_NOW.DATA.HEADING;
+                    latitude = POS.ConvertToDegree(LOGDATA_NOW.DATA.LATITUDE);
+                    longitude = POS.ConvertToDegree(LOGDATA_NOW.DATA.LONGITUDE);
+                    altitude = LOGDATA_NOW.DATA.ALTITUDE;
+                }
+                else
+                {
+                    heading = (float)TEXTBOX_Heading.Value;
+                    latitude = POSITION.Latitude;
+                    longitude = POSITION.Longitude;
+                    altitude = POSITION.Altitude;
+                }
+
+                using (StreamWriter kml = new StreamWriter(_kmlPath, false, Encoding.UTF8))
+                {
+                    kml.Write(KML.Header(_kmlPath));
+                    kml.Write(KML.AirPlaneMarker(0, "Position", "", 1, heading, longitude, latitude, altitude, true));
+                    kml.Write(KML.Line(1, "TARGET LINE", "", Colors.Red, 3, new List<KML.POSITION> { new KML.POSITION(longitude, latitude,altitude), new KML.POSITION(138.163956f, 36.09266f, 1666.6f) }));
+                    kml.Write(KML.Footer());
+                    kml.Close();
+                    kml.Dispose();
+                }
+                while (_kmlExTASKstate && (DateTime.Now - _kmlExNOW) < TimeSpan.FromMilliseconds(cycle)) { Thread.Sleep(taskLoopSleep); }
             }
         }
 

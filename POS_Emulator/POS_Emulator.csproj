@@ -52,6 +52,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="clsGPS.cs" />
+    <Compile Include="clsKML.cs" />
     <Compile Include="clsSearchList.cs" />
     <Compile Include="winSettings.xaml.cs">
       <DependentUpon>winSettings.xaml</DependentUpon>
@@ -129,6 +130,11 @@
     <Resource Include="img\IncreasSpeed.png" />
     <Resource Include="img\Play.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="img\Settings.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\POS_Emulator.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
