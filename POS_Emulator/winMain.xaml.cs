@@ -196,7 +196,7 @@ namespace POS_Emulator
                 _posExTASK?.ConfigureAwait(false);
                 _posExTASK?.Wait();
             }
-            _posExTASK.Dispose();
+            _posExTASK?.Dispose();
             _posExTASK = null;
         }
 
@@ -254,7 +254,7 @@ namespace POS_Emulator
                 _logPlayTASK?.ConfigureAwait(false);
                 _logPlayTASK?.Wait();
             }
-            _logPlayTASK.Dispose();
+            _logPlayTASK?.Dispose();
             _logPlayTASK = null;
         }
 
