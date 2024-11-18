@@ -21,13 +21,13 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="posLatitude" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">36.09266</Value>
+      <Value Profile="(Default)">35.2528267</Value>
     </Setting>
     <Setting Name="posLongitude" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">138.163956</Value>
+      <Value Profile="(Default)">136.923553</Value>
     </Setting>
     <Setting Name="posAltitude" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1666.6</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="posSpeed" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -43,6 +43,15 @@
     </Setting>
     <Setting Name="posDownAccel" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="targLatitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">36.09266</Value>
+    </Setting>
+    <Setting Name="targLongitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">138.163956</Value>
+    </Setting>
+    <Setting Name="targAltitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1666.6</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using POS_Emulator.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -335,8 +336,9 @@ namespace POS_Emulator
                 using (StreamWriter kml = new StreamWriter(_kmlPath, false, Encoding.UTF8))
                 {
                     kml.Write(KML.Header(_kmlPath));
-                    kml.Write(KML.AirPlaneMarker(0, "Position", "", 1, heading, longitude, latitude, altitude, true));
-                    kml.Write(KML.Line(1, "TARGET LINE", "", Colors.Red, 3, new List<KML.POSITION> { new KML.POSITION(longitude, latitude,altitude), new KML.POSITION(138.163956f, 36.09266f, 1666.6f) }));
+                    kml.Write(KML.AirPlaneMarker(0, "Position", "", Colors.Green, 1, heading, longitude, latitude, altitude, true));
+                    kml.Write(KML.TargetCrossMarker(1, "Target", "", Colors.Red, 1, Settings.Default.targLongitude, Settings.Default.targLatitude, Settings.Default.targAltitude, true));
+                    kml.Write(KML.Line(2, "TARGET LINE", "", Colors.Blue, 3, new List<KML.POSITION> { new KML.POSITION(longitude, latitude,altitude), new KML.POSITION(Settings.Default.targLongitude, Settings.Default.targLatitude, Settings.Default.targAltitude) }));
                     kml.Write(KML.Footer());
                     kml.Close();
                     kml.Dispose();

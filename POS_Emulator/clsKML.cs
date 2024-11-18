@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
+﻿using System.Collections.Generic;
 using System.Windows.Media;
 
 namespace POS_Emulator
@@ -20,7 +15,7 @@ namespace POS_Emulator
             return "</Document>\n</kml>";
         }
 
-        public static string AirPlaneMarker(int id, string name,string description, float scale,float heading, float longitude, float latitude, float altitude, bool gndLine)
+        public static string AirPlaneMarker(int id, string name,string description, Color iconColor, float scale,float heading, float longitude, float latitude, float altitude, bool gndLine)
         {
             string strBF = "";
             strBF += "<Placemark id=\"" + id.ToString() + "\">\n";
@@ -29,15 +24,42 @@ namespace POS_Emulator
 
             strBF += "\t<Style>\n";
             strBF += "\t\t<IconStyle>\n";
+            strBF += "\t\t\t<color>" + iconColor.A.ToString("X2")+ iconColor.B.ToString("X2")+ iconColor.G.ToString("X2")+ iconColor.R.ToString("X2") + "</color>\n";
             strBF += "\t\t\t<scale>" + scale.ToString("0.0") + "</scale>\n";
             strBF += "\t\t\t<heading>" + heading.ToString("0.00") + "</heading>\n";
             strBF += "\t\t\t<Icon><href>root://icons/palette-2.png</href><w>32</w><h>32</h></Icon>\n";
+            //strBF += "\t\t\t<Icon><href>http://maps.google.com/mapfiles/kml/shapes/airports.png</href></Icon>\n";
             strBF += "\t\t</IconStyle>\n";
             strBF += "\t</Style>\n";
             strBF += "\t<Point>\n";
             strBF += "\t\t<coordinates>" + longitude.ToString("0.0000000") + "," + latitude.ToString("0.0000000") + "," + altitude.ToString("0.00") + "</coordinates>\n";
             if (gndLine) { strBF += "\t\t<extrude>1</extrude>\n"; }
             
+            strBF += "\t\t<altitudeMode>absolute</altitudeMode>\n";
+            strBF += "\t</Point>\n";
+            strBF += "</Placemark>\n";
+            return strBF;
+        }
+
+        public static string TargetCrossMarker(int id, string name, string description, Color iconColor, float scale, float longitude, float latitude, float altitude, bool gndLine)
+        {
+            string strBF = "";
+            strBF += "<Placemark id=\"" + id.ToString() + "\">\n";
+            strBF += "\t<name>" + name + "</name>\n";
+            strBF += "\t<description>" + description + "</description>\n";
+
+            strBF += "\t<Style>\n";
+            strBF += "\t\t<IconStyle>\n";
+            strBF += "\t\t\t<color>" + iconColor.A.ToString("X2") + iconColor.B.ToString("X2") + iconColor.G.ToString("X2") + iconColor.R.ToString("X2") + "</color>\n";
+            strBF += "\t\t\t<scale>" + scale.ToString("0.0") + "</scale>\n";
+            strBF += "\t\t\t<Icon><href>root://icons/palette-4.png</href><w>32</w><h>32</h></Icon>\n";
+            //strBF += "\t\t\t<Icon><href>http://maps.google.com/mapfiles/kml/shapes/cross-hairs_highlight.png<href></Icon>\n";
+            strBF += "\t\t</IconStyle>\n";
+            strBF += "\t</Style>\n";
+            strBF += "\t<Point>\n";
+            strBF += "\t\t<coordinates>" + longitude.ToString("0.0000000") + "," + latitude.ToString("0.0000000") + "," + altitude.ToString("0.00") + "</coordinates>\n";
+            if (gndLine) { strBF += "\t\t<extrude>1</extrude>\n"; }
+
             strBF += "\t\t<altitudeMode>absolute</altitudeMode>\n";
             strBF += "\t</Point>\n";
             strBF += "</Placemark>\n";
@@ -54,7 +76,7 @@ namespace POS_Emulator
 
             strBF += "\t<Style>\n";
             strBF += "\t\t<LineStyle>\n";
-            strBF += "\t\t\t<color>"+ lineColor.ToString().Trim('#') + "</color>\n";
+            strBF += "\t\t\t<color>" + lineColor.A.ToString("X2") + lineColor.B.ToString("X2") + lineColor.G.ToString("X2") + lineColor.R.ToString("X2") + "</color>\n";
             strBF += "\t\t\t<width>"+ lineWidth.ToString() + "</width>\n";
             strBF += "\t\t</LineStyle>\n";
             strBF += "\t</Style>\n";

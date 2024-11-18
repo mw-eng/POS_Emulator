@@ -97,7 +97,7 @@ namespace POS_Emulator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("36.09266")]
+        [global::System.Configuration.DefaultSettingValueAttribute("35.2528267")]
         public float posLatitude {
             get {
                 return ((float)(this["posLatitude"]));
@@ -109,7 +109,7 @@ namespace POS_Emulator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("138.163956")]
+        [global::System.Configuration.DefaultSettingValueAttribute("136.923553")]
         public float posLongitude {
             get {
                 return ((float)(this["posLongitude"]));
@@ -121,7 +121,7 @@ namespace POS_Emulator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1666.6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public float posAltitude {
             get {
                 return ((float)(this["posAltitude"]));
@@ -188,6 +188,42 @@ namespace POS_Emulator.Properties {
             }
             set {
                 this["posDownAccel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("36.09266")]
+        public float targLatitude {
+            get {
+                return ((float)(this["targLatitude"]));
+            }
+            set {
+                this["targLatitude"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("138.163956")]
+        public float targLongitude {
+            get {
+                return ((float)(this["targLongitude"]));
+            }
+            set {
+                this["targLongitude"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1666.6")]
+        public float targAltitude {
+            get {
+                return ((float)(this["targAltitude"]));
+            }
+            set {
+                this["targAltitude"] = value;
             }
         }
     }
