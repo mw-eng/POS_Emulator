@@ -182,7 +182,6 @@ namespace POS_Emulator
             _posExTASKstate = true;
             _posExTASK = Task.Factory.StartNew(() => { POS_OUTPUT_TASK((UInt16)Math.Truncate((1.0 / Properties.Settings.Default.spCycle) * 1000)); });
         }
-
         private void POS_OUTPUT_TASK_Stop(bool wait)
         {
             _posExTASKstate = false;
@@ -194,7 +193,6 @@ namespace POS_Emulator
             _posExTASK?.Dispose();
             _posExTASK = null;
         }
-
         private void POS_OUTPUT_TASK(UInt16 cycle)
         {
             while (_posExTASKstate)
@@ -240,7 +238,6 @@ namespace POS_Emulator
             _logPlayTASKstate = true;
             _logPlayTASK = Task.Factory.StartNew(() => { POS_PLAY_TASK(); });
         }
-
         private void LOG_PLAY_TASK_Stop(bool wait)
         {
             _logPlayTASKstate = false;
@@ -252,7 +249,6 @@ namespace POS_Emulator
             _logPlayTASK?.Dispose();
             _logPlayTASK = null;
         }
-
         private void LOG_PLAY_TASK_Pause()
         {
             _logPlayTASKstate = null;
@@ -261,7 +257,6 @@ namespace POS_Emulator
         {
             _logPlayTASKstate = true;
         }
-
         private void POS_PLAY_TASK()
         {
             while (_logPlayTASKstate != false)
