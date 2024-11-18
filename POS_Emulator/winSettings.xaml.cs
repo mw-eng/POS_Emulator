@@ -32,6 +32,9 @@ namespace POS_Emulator
             Settings.Default.spCaption = COMBOBOX_SerialPort.Text;
             Settings.Default.spBaudRate = (int)TEXTBOX_BaudRate.Value;
             Settings.Default.spCycle = (sbyte)TEXTBOX_Cycle.Value;
+            Settings.Default.targLongitude = POSITION.Longitude;
+            Settings.Default.targLatitude = POSITION.Latitude;
+            Settings.Default.targAltitude = POSITION.Altitude;
             Settings.Default.Save();
             this.Close();
         }
@@ -51,6 +54,9 @@ namespace POS_Emulator
             TEXTBOX_BaudRate.MaximumValue = 115200;
             TEXTBOX_Cycle.MinimumValue = 1;
             TEXTBOX_Cycle.MaximumValue = 400;
+            POSITION.Longitude = Settings.Default.targLongitude;
+            POSITION.Latitude = Settings.Default.targLatitude;
+            POSITION.Altitude = Settings.Default.targAltitude;
             if (ports != null)
             {
                 for (int i = 0; i < ports.Length; i++)
