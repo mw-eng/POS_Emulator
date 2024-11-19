@@ -123,53 +123,79 @@ namespace POS_Emulator
 
         private void OpenLogFile_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "log file|*.log|binary file|*.bin|All File|*.*";
-            ofd.FilterIndex = 0;
-            if(ofd.ShowDialog() != true)
+            if (_logView)
             {
-                return;
+                LOG_PLAY_TASK_Stop(true);
+                POS_OUTPUT_TASK_Stop(true);
+                _logDAT = null;
+                _logView = false;
+                OLF.Header = "Open Log File";
+                MainGRID.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Star);
+                MainGRID.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
+                MainGRID.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Pixel);
+                POS_OUTPUT_TASK_Start();
             }
-            List<List<byte>> dat = new List<List<byte>>();
-            List<byte> byBF = System.IO.File.ReadAllBytes(ofd.FileName).ToList();
-            int posi_n = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 });
-            int posi_n1 = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 }, posi_n + 1);
-            while(posi_n >=0 && posi_n1 >= 0)
+            else
             {
-                dat.Add(byBF.GetRange(posi_n, posi_n1 - posi_n));
-                posi_n = posi_n1;
-                posi_n1 = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 }, posi_n + 1);
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "log file|*.log|binary file|*.bin|All File|*.*";
+                ofd.FilterIndex = 0;
+                if (ofd.ShowDialog() != true)
+                {
+                    return;
+                }
+                List<List<byte>> dat = new List<List<byte>>();
+                List<byte> byBF = System.IO.File.ReadAllBytes(ofd.FileName).ToList();
+                int posi_n = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 });
+                int posi_n1 = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 }, posi_n + 1);
+                while (posi_n >= 0 && posi_n1 >= 0)
+                {
+                    dat.Add(byBF.GetRange(posi_n, posi_n1 - posi_n));
+                    posi_n = posi_n1;
+                    posi_n1 = SearchList.SearchBytesSundayIndexOf(byBF, new byte[] { 0x00, 0x96 }, posi_n + 1);
+                }
+                if (dat.Count() == 0)
+                {
+                    MessageBox.Show("Failed to read file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                POS_OUTPUT_TASK_Stop(true);
+                _logDAT = dat;
+                MainGRID.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
+                MainGRID.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Star);
+                MainGRID.RowDefinitions[2].Height = new GridLength(100, GridUnitType.Pixel);
+                SLIDER.Maximum = _logDAT.Count();
+                SLIDER.Value = 0;
+                SLIDER.TickFrequency = _logDAT.Count() / 50;
+                LOGDATA_NOW.DATA = new POS.PAST2(_logDAT[(int)Math.Round(SLIDER.Value, MidpointRounding.AwayFromZero)]);
+                _logView = true;
+                OLF.Header = "Close Log File";
+                POS_OUTPUT_TASK_Start();
             }
-            if (dat.Count() == 0)
-            {
-                MessageBox.Show("Failed to read file.","Error",MessageBoxButton.OK,MessageBoxImage.Error);
-                return;
-            }
-            POS_OUTPUT_TASK_Stop(true);
-            _logDAT = dat;
-            MainGRID.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
-            MainGRID.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Star);
-            MainGRID.RowDefinitions[2].Height = new GridLength(100, GridUnitType.Pixel);
-            SLIDER.Maximum = _logDAT.Count();
-            SLIDER.Value = 0;
-            SLIDER.TickFrequency = _logDAT.Count() / 50;
-            LOGDATA_NOW.DATA = new POS.PAST2(_logDAT[(int)Math.Round(SLIDER.Value, MidpointRounding.AwayFromZero)]);
-            _logView = true;
-            POS_OUTPUT_TASK_Start();
         }
 
         private void SaveKML_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "KML file|*.kml|All File|*.*";
-            sfd.FilterIndex = 0;
-            if (sfd.ShowDialog() != true)
+            if (string.IsNullOrWhiteSpace(_kmlPath) && !_kmlExTASKstate)
             {
-                return;
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "KML file|*.kml|All File|*.*";
+                sfd.FilterIndex = 0;
+                if (sfd.ShowDialog() != true)
+                {
+                    return;
+                }
+                KML_OUTPUT_TASK_Stop(true);
+                _kmlPath = sfd.FileName;
+                SKML.Header = "Auto Save KML Stop";
+                KML_OUTPUT_TASK_Start(1000);
             }
-            KML_OUTPUT_TASK_Stop(true);
-            _kmlPath = sfd.FileName;
-            KML_OUTPUT_TASK_Start(1000);
+            else
+            {
+                KML_OUTPUT_TASK_Stop(true);
+                _kmlPath = "";
+                SKML.Header = "Auto Save KML Start";
+            }
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

@@ -9,8 +9,8 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" FontSize="16">
             <MenuItem Header="File">
-                <MenuItem Header="Open Log File" Click="OpenLogFile_Click"/>
-                <MenuItem Header="Auto Save KML" Click="SaveKML_Click"/>
+                <MenuItem Header="Open Log File" Click="OpenLogFile_Click" x:Name="OLF"/>
+                <MenuItem Header="Auto Save KML Start" Click="SaveKML_Click" x:Name="SKML"/>
                 <MenuItem Header="Exit" Click="Exit_Click"/>
             </MenuItem>
             <MenuItem Header="Tool">
