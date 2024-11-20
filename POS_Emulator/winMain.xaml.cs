@@ -45,7 +45,7 @@ namespace POS_Emulator
             Properties.Settings.Default.Reset();
             this.Title += "_DEBUG MODE";
 #endif
-            SerialReOpen();
+            if (!SerialReOpen()) { this.Close(); return; }
             TEXTBOX_Roll.MinimumValue = -180;
             TEXTBOX_Roll.MaximumValue = 180;
             TEXTBOX_Pitch.MinimumValue = -180;
@@ -209,7 +209,7 @@ namespace POS_Emulator
             if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
             winSettings win = new winSettings();
             win.ShowDialog();
-            SerialReOpen();
+            if (!SerialReOpen()) { this.Close(); return; }
             POS_OUTPUT_TASK_Start();
         }
 
@@ -373,7 +373,7 @@ namespace POS_Emulator
             }
         }
 
-        private void SerialReOpen()
+        private bool SerialReOpen()
         {
             if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
             ShowSerialPortName.SerialPortTable sp;
@@ -381,15 +381,13 @@ namespace POS_Emulator
             {
                 if (MessageBox.Show("No serial port exists.\nClose the app?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    this.Close();
-                    return;
+                    return false;
                 }
                 else
                 {
                     winSettings win = new winSettings();
                     win.ShowDialog();
-                    SerialReOpen();
-                    return;
+                    return SerialReOpen();
                 }
             }
             _serial = new SerialPort(sp.Name);
@@ -407,20 +405,19 @@ namespace POS_Emulator
             try
             {
                 _serial.Open();
+                return true;
             }
             catch
             {
                 if (MessageBox.Show("Failed to open serial port.\nClose the app?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
-                    this.Close();
-                    return;
+                    return false;
                 }
                 else
                 {
                     winSettings win = new winSettings();
                     win.ShowDialog();
-                    SerialReOpen();
-                    return;
+                    return SerialReOpen();
                 }
             }
         }
