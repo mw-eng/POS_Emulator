@@ -65,7 +65,7 @@ namespace POS_Emulator
 
         public static bool SearchDeviceCaption(string caption, out SerialPortTable serial)
         {
-            if (string.IsNullOrWhiteSpace(caption)) { serial = new SerialPortTable(); return false; }
+            if (string.IsNullOrWhiteSpace(caption) || GetDeviceNames() == null) { serial = new SerialPortTable(); return false; }
             foreach (SerialPortTable spt in GetDeviceNames())
             {
                 if (spt.Caption == caption) { serial = spt; return true; }

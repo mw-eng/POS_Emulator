@@ -65,6 +65,7 @@ namespace POS_Emulator
                     { COMBOBOX_SerialPort.SelectedIndex = i; break; }
                 }
             }
+            if(COMBOBOX_SerialPort.SelectedIndex < 0) { OK_BUTTON.IsEnabled = false; }
         }
 
         private void COMBOBOX_SerialPort_RELOAD(object sender, EventArgs e)
