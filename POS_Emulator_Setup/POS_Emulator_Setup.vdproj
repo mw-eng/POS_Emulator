@@ -43,6 +43,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -59,6 +67,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -197,15 +213,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:POS_Emulator"
-        "ProductCode" = "8:{8F78EACA-9502-43D5-A38F-2AC85EC6ADE7}"
-        "PackageCode" = "8:{C4864F90-F8F3-4D6B-AA98-5B3535DD6BED}"
+        "ProductCode" = "8:{585521F6-E683-40B8-B050-D8F3ACCD4756}"
+        "PackageCode" = "8:{580A9043-B254-47C3-8CDA-DA97ED57546D}"
         "UpgradeCode" = "8:{71ED0B81-8DC6-4AC5-85B4-8660AED69CCE}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:OrientMicrowaveCorp."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -747,7 +763,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C110562EC4F64B7CB454DFBE2702906A"
             {
-            "SourcePath" = "8:..\\POS_Emulator\\obj\\Release\\POS_Emulator.exe"
+            "SourcePath" = "8:..\\POS_Emulator\\obj\\Debug\\POS_Emulator.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1627047E331D491380427EC7B7784296"
