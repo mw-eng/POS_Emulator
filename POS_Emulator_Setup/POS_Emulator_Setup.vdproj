@@ -198,7 +198,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:POS_Emulator"
         "ProductCode" = "8:{8F78EACA-9502-43D5-A38F-2AC85EC6ADE7}"
-        "PackageCode" = "8:{7C29AE51-AAD1-473F-8237-C462FDE2E9E3}"
+        "PackageCode" = "8:{C4864F90-F8F3-4D6B-AA98-5B3535DD6BED}"
         "UpgradeCode" = "8:{71ED0B81-8DC6-4AC5-85B4-8660AED69CCE}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
