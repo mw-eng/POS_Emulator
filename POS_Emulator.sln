@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS_Emulator", "POS_Emulator\POS_Emulator.csproj", "{755B7225-A032-4532-8AA6-71097DCC95E6}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "POS_Emulator_Setup", "POS_Emulator_Setup\POS_Emulator_Setup.vdproj", "{4C78F92D-87B1-4A85-A4BB-517530E0CCB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{755B7225-A032-4532-8AA6-71097DCC95E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{755B7225-A032-4532-8AA6-71097DCC95E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{755B7225-A032-4532-8AA6-71097DCC95E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C78F92D-87B1-4A85-A4BB-517530E0CCB0}.Debug|Any CPU.ActiveCfg = Debug
+		{4C78F92D-87B1-4A85-A4BB-517530E0CCB0}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

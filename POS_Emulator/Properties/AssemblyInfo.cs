@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("POS_Emulator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("OrientMicrowave")]
 [assembly: AssemblyProduct("POS_Emulator")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyCopyright("Copyright © Orient Microwave Corp.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
