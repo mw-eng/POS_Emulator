@@ -1,0 +1,931 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MWComLibCS.CoordinateSystem</name>
+    </assembly>
+    <members>
+        <member name="T:MWComLibCS.CoordinateSystem.CoordinateSystem2D">
+            <summary>
+            2次元座標系
+            </summary>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.#ctor(MWComLibCS.CartesianCS)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="coordinate">直行座標(X,Y)</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.#ctor(System.Double,System.Double)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="x">x座標</param>
+            <param name="y">y座標</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.#ctor(System.Numerics.Complex)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="comp">複素平面定義</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.#ctor(MWComLibCS.CircularCS)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="coordinate">円座標(R,Phi)</param>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Cartesian">
+            <summary>直行座標(X,Y)で取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Circular">
+            <summary>円座標(r,φ[rad])で取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Complex">
+            <summary>複素数平面座標(X+jY)で取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.X">
+            <summary>X座標取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Y">
+            <summary>Y座標取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.R">
+            <summary>R取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Phi">
+            <summary>偏角Phi(φ[x,y平面と平行な面内での偏角でx軸=0deg])取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Abs">
+            <summary>ABS(R)取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Zero">
+            <summary>0点取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.One">
+            <summary>(x,y)=(1,1)取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.UnitX">
+            <summary>(x,y)=(1,0)取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem2D.UnitY">
+            <summary>(x,y)=(0,1)取得</summary>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.ConvertCS3D(System.Double)">
+            <summary>
+            3次元座標系に変換
+            </summary>
+            <param name="z">Z座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.ConvertCS3D(MWComLibCS.Angle)">
+            <summary>
+            3次元座標系に変換
+            </summary>
+            <param name="theta">偏角Theta(θ[z,Phi平面でz軸=0deg])</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Add(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            加算演算
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Subtract(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            減算演算
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            積算演算(軸別積算)
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Multiply(System.Numerics.Complex,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            積算演算(複素数積算)
+            </summary>
+            <param name="comp">複素数平面座標</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Numerics.Complex)">
+            <summary>
+            積算演算(複素数積算)
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="comp">複素数平面座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Multiply(System.Double,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            積算演算
+            </summary>
+            <param name="value">実数</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Double)">
+            <summary>
+            積算演算
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="value">実数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Divide(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            除算演算(軸別除算)
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Divide(System.Numerics.Complex,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            除算演算(複素数除算)
+            </summary>
+            <param name="comp">複素数平面座標</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Divide(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Numerics.Complex)">
+            <summary>
+            除算演算(複素数除算)
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="comp">複素数平面座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Divide(System.Double,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            除算演算(実数/各座標)
+            </summary>
+            <param name="value">実数</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Divide(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Double)">
+            <summary>
+            除算演算(各座標/実数)
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="value">実数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Dot(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            内積
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Ang(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            角度算出(0～180deg)
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Equality(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            座標比較演算子
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns>true:同一座標/false:異なる座標</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Inequality(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            座標比較演算子
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns>true:異なる座標/false:同一座標</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Addition(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            加算演算子
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Subtraction(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            減算演算子
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            積算演算(軸別積算)
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Multiply(System.Numerics.Complex,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            積算演算(複素数積算)
+            </summary>
+            <param name="comp">複素数平面座標</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Numerics.Complex)">
+            <summary>
+            積算演算(複素数積算)
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="comp">複素数平面座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Multiply(System.Double,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            積算演算子
+            </summary>
+            <param name="value">実数</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Double)">
+            <summary>
+            積算演算子
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="value">実数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Division(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            除算演算(軸別除算)
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Division(System.Numerics.Complex,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            除算演算(複素数除算)
+            </summary>
+            <param name="comp">複素数平面座標</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Division(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Numerics.Complex)">
+            <summary>
+            除算演算(複素数除算)
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="comp">複素数平面座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Division(System.Double,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            除算演算子
+            </summary>
+            <param name="value">実数</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_Division(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Double)">
+            <summary>
+            除算演算子
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="value">実数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_BitwiseOr(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            内積
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.op_ExclusiveOr(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            角度算出(0～180deg)
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Equals(System.Object)">
+            <summary>
+            Equals override
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.GetHashCode">
+            <summary>
+            GetHashCode overwrite(X xor Y xor Z)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Equals(MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            座標比較を行い、同一座標であればtrue
+            </summary>
+            <param name="coordinate">比較対象座標</param>
+            <returns>true:同一座標/false:異なる座標</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.Equals(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.CoordinateSystem.CoordinateSystem2D)">
+            <summary>
+            座標比較を行い、同一座標であればtrue
+            </summary>
+            <param name="cs2D_1">座標1</param>
+            <param name="cs2D_2">座標2</param>
+            <returns>true:同一座標/false:異なる座標</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.ToString">
+            <summary>
+            このインスタンスの数値を等価な文字列形式に変換(X,Y,Z)
+            </summary>
+            <returns>X,Y,Z</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.ToString(System.String)">
+            <summary>
+            このインスタンスの数値を等価な文字列形式に変換(format指定)
+            </summary>
+            <param name="format">G/O=(X,Y,Z)/C=(R,Phi,Z)/S=(R,Phi,Theta)</param>
+            <returns>インスタンスの数値文字列</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem2D.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            このインスタンスの数値を等価な文字列形式に変換(format指定)
+            </summary>
+            <param name="format">G/O=(X,Y)/C=(R,Phi)</param>
+            <param name="formatProvider"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MWComLibCS.CoordinateSystem.CoordinateSystem3D">
+            <summary>
+            3次元座標系
+            </summary>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(MWComLibCS.OrthogonalCS)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="coordinate">直行座標(X,Y,Z)</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="x">x座標</param>
+            <param name="y">y座標</param>
+            <param name="z">z座標</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(System.Double,MWComLibCS.Angle,System.Double)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="r">動径R</param>
+            <param name="phi">偏角Phi(φ[x,y平面と平行な面内での偏角でx軸=0deg])</param>
+            <param name="z">z座標</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(System.Double,MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="r">動径R</param>
+            <param name="phi">偏角Phi(φ[x,y平面と平行な面内での偏角でx軸=0deg])</param>
+            <param name="theta">偏角Theta(θ[z,Phi平面でz軸=0deg])</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(MWComLibCS.CylindricalCS)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="coordinate">円柱座標(R,Phi,Z)</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(MWComLibCS.SphericalCS)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="coordinate">球面座標系(R,Phi,Theta)</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(MWComLibCS.CartesianCS,System.Double)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="xy">直行座標(X,Y)</param>
+            <param name="z">z座標</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(MWComLibCS.CircularCS,System.Double)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="circular">円座標(R,Phi)</param>
+            <param name="z">z座標</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(MWComLibCS.CircularCS,MWComLibCS.Angle)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="circular">円座標(R,Phi)</param>
+            <param name="theta">偏角Theta(θ[z,Phi平面でz軸=0deg])</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(MWComLibCS.CoordinateSystem.CoordinateSystem2D,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="cs2D">2次元座標系</param>
+            <param name="z">z座標</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.#ctor(MWComLibCS.CoordinateSystem.CoordinateSystem2D,MWComLibCS.Angle)">
+            <summary>
+            
+            </summary>
+            <param name="cs2D">2次元座標系</param>
+            <param name="theta">偏角Theta(θ[z,Phi平面でz軸=0deg])</param>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Orthogonal">
+            <summary>直行座標(X,Y,Z)で取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Cylindrical">
+            <summary>円柱座標(r,φ[rad],z)で取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Spherical">
+            <summary>球面座標系(r,φ[rad],θ[rad])で取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.X">
+            <summary>X座標取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Y">
+            <summary>Y座標取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Z">
+            <summary>Z座標取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.R">
+            <summary>R取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Phi">
+            <summary>偏角Phi(φ[x,y平面と平行な面内での偏角でx軸=0deg])取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Theta">
+            <summary>偏角Theta(θ[z,Phi平面でz軸=0deg])取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Abs">
+            <summary>ABS(R)取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Zero">
+            <summary>0点取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.One">
+            <summary>(x,y,z)=(1,1,1)取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.UnitX">
+            <summary>(x,y,z)=(1,0,0)取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.UnitY">
+            <summary>(x,y,z)=(0,1,0)取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.UnitZ">
+            <summary>(x,y,z)=(0,0,1)取得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystem3D.ConvertCS2D">
+            <summary>
+            2次元座標系に変換(Z/Thetaは削除)
+            </summary>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Add(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            加算演算
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Subtract(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            減算演算
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            積算演算(軸別)
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Multiply(System.Double,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            積算演算
+            </summary>
+            <param name="value">実数</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem3D,System.Double)">
+            <summary>
+            積算演算
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="value">実数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Divide(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            除算演算(軸別)
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Divide(System.Double,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            除算演算(実数/各座標)
+            </summary>
+            <param name="value">実数</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Divide(MWComLibCS.CoordinateSystem.CoordinateSystem3D,System.Double)">
+            <summary>
+            除算演算(各座標/実数)
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="value">実数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Dot(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            内積
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Cross(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            外積
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Ang(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            角度算出(0～180deg)
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Equality(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            座標比較演算子
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns>true:同一座標/false:異なる座標</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Inequality(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            座標比較演算子
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns>true:異なる座標/false:同一座標</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Addition(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            加算演算子
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Subtraction(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            減算演算子
+            </summary>
+            <param name="cs3D_1"></param>
+            <param name="cs3D_2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            積算演算子(軸別)
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Multiply(System.Double,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            積算演算子
+            </summary>
+            <param name="value">実数</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Multiply(MWComLibCS.CoordinateSystem.CoordinateSystem3D,System.Double)">
+            <summary>
+            積算演算子
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="value">実数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Division(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            除算演算子(軸別)
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Division(System.Double,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            除算演算子
+            </summary>
+            <param name="value">実数</param>
+            <param name="coordinate">座標</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_Division(MWComLibCS.CoordinateSystem.CoordinateSystem3D,System.Double)">
+            <summary>
+            除算演算子
+            </summary>
+            <param name="coordinate">座標</param>
+            <param name="value">実数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_BitwiseOr(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            内積
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_BitwiseAnd(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            外積
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.op_ExclusiveOr(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            角度算出(0～180deg)
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Equals(System.Object)">
+            <summary>
+            Equals override
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.GetHashCode">
+            <summary>
+            GetHashCode overwrite(X xor Y xor Z)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Equals(MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            座標比較を行い、同一座標であればtrue
+            </summary>
+            <param name="coordinate">比較対象座標</param>
+            <returns>true:同一座標/false:異なる座標</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.Equals(MWComLibCS.CoordinateSystem.CoordinateSystem3D,MWComLibCS.CoordinateSystem.CoordinateSystem3D)">
+            <summary>
+            座標比較を行い、同一座標であればtrue
+            </summary>
+            <param name="cs3D_1">座標1</param>
+            <param name="cs3D_2">座標2</param>
+            <returns>true:同一座標/false:異なる座標</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.ToString">
+            <summary>
+            このインスタンスの数値を等価な文字列形式に変換(X,Y,Z)
+            </summary>
+            <returns>X,Y,Z</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.ToString(System.String)">
+            <summary>
+            このインスタンスの数値を等価な文字列形式に変換(format指定)
+            </summary>
+            <param name="format">G/O=(X,Y,Z)/C=(R,Phi,Z)/S=(R,Phi,Theta)</param>
+            <returns>インスタンスの数値文字列</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystem3D.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            このインスタンスの数値を等価な文字列形式に変換(format指定)
+            </summary>
+            <param name="format">G/O=(X,Y,Z)/C=(R,Phi,Z)/S=(R,Phi,Theta)</param>
+            <param name="formatProvider"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MWComLibCS.CoordinateSystem.AntennaCS">
+            <summary>
+            アンテナ指向性方向座標系
+            </summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.AntennaCS.OrthogonalCoordinate">
+            <summary>直交座標</summary>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.#ctor">
+            <summary>
+            コンストラクタ(0で初期化)
+            </summary>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.#ctor(MWComLibCS.Angle,MWComLibCS.Angle,System.Nullable{System.Boolean})">
+            <summary>
+            コンストラクタ(動径1として初期化)
+            </summary>
+            <param name="AzimuthAngle">方位角(Phi / Azimuth / Epsilon)</param>
+            <param name="PolarAngle">極角(Theta / Elevation / Alpha)</param>
+            <param name="CoordinateSystem">座標系(null:球面座標系Fai-Theta / true:地平座標系Azimuth-Elevation / false:赤道座標系Epsilon-Alpha)</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.#ctor(System.Double,MWComLibCS.Angle,MWComLibCS.Angle,System.Nullable{System.Boolean})">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="Radius">動径R</param>
+            <param name="AzimuthAngle">方位角(Phi / Azimuth / Epsilon)</param>
+            <param name="PolarAngle">極角(Theta / Elevation / Alpha)</param>
+            <param name="CoordinateSystem">座標系(null:球面座標系Fai-Theta / true:地平座標系Azimuth-Elevation / false:赤道座標系Epsilon-Alpha)</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.Radius">
+            <summary>
+            動径R取得
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.NormalizedAngle(System.Nullable{System.Boolean},MWComLibCS.Angle@,MWComLibCS.Angle@)">
+            <summary>
+            正規化角度取得(有効桁は14桁として演算し、範囲は0～360degとしPolarAngleが0～360degとする)
+            </summary>
+            <param name="CoordinateSystem">座標系(null:球面座標系Fai-Theta / true:地平座標系Azimuth-Elevation / false:赤道座標系Epsilon-Alpha)</param>
+            <param name="NormalizedAzimuthAngle">正規化された方位角(Phi / Azimuth / Epsilon)</param>
+            <param name="NormalizedPolarAngle">正規化された極角(Theta / Elevation / Alpha)</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.NormalizedAngle(System.Nullable{System.Boolean},System.Boolean,System.Boolean,MWComLibCS.Angle@,MWComLibCS.Angle@)">
+            <summary>
+            正規化角度取得(有効桁は14桁として演算)
+            </summary>
+            <param name="CoordinateSystem">座標系(null:球面座標系Fai-Theta / true:地平座標系Azimuth-Elevation / false:赤道座標系Epsilon-Alpha)</param>
+            <param name="PolarFullRange">極角(Theta / Elevation / Alpha)を360degの範囲で正規化</param>
+            <param name="PlusOrMinusRange">角度範囲を±180degの範囲で正規化</param>
+            <param name="NormalizedAzimuthAngle">正規化された方位角(Phi / Azimuth / Epsilon)</param>
+            <param name="NormalizedPolarAngle">正規化された極角(Theta / Elevation / Alpha)</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.NormalizedAngle(System.Nullable{System.Boolean},System.Boolean,System.Boolean,System.UInt32,MWComLibCS.Angle@,MWComLibCS.Angle@)">
+            <summary>
+            正規化角度取得
+            </summary>
+            <param name="CoordinateSystem">座標系(null:球面座標系Fai-Theta / true:地平座標系Azimuth-Elevation / false:赤道座標系Epsilon-Alpha)</param>
+            <param name="PolarFullRange">極角(Theta / Elevation / Alpha)を360degの範囲で正規化</param>
+            <param name="PlusOrMinusRange">角度範囲を±180degの範囲で正規化</param>
+            <param name="SignificantDigits">有効桁</param>
+            <param name="NormalizedAzimuthAngle">正規化された方位角(Phi / Azimuth / Epsilon)</param>
+            <param name="NormalizedPolarAngle">正規化された極角(Theta / Elevation / Alpha)</param>
+            <returns>成否</returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.DenormalizedAngle(System.Nullable{System.Boolean},System.UInt32,MWComLibCS.Angle@,MWComLibCS.Angle@)">
+            <summary>
+            <para>非正規化角度取得</para>
+            <para>動径0の時は極角、方位角共にAngle.Nanとし、returns=false</para>
+            <para>方位角共が0除算となる場合は0degとし、returns=false</para>
+            </summary>
+            <param name="CoordinateSystem">座標系(null:球面座標系Fai-Theta / true:地平座標系Azimuth-Elevation / false:赤道座標系Epsilon-Alpha)</param>
+            <param name="SignificantDigits">有効桁</param>
+            <param name="DenormalizedAzimuthAngle">方位角(Phi / Azimuth / Epsilon)</param>
+            <param name="DenormalizedPolarAngle">極角(Theta / Elevation / Alpha)</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MWComLibCS.CoordinateSystem.AntennaCS.NormalizeAngle(MWComLibCS.Angle,MWComLibCS.Angle,System.Nullable{System.Boolean},MWComLibCS.Angle@,MWComLibCS.Angle@)" -->
+        <!-- Badly formed XML comment ignored for member "M:MWComLibCS.CoordinateSystem.AntennaCS.NormalizeAngle(MWComLibCS.Angle,MWComLibCS.Angle,System.Nullable{System.Boolean},System.Boolean,System.Boolean,MWComLibCS.Angle@,MWComLibCS.Angle@)" -->
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.HorizontalCoordinateSystemAntenna(MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>地平座標系(Azimuth-Elevation)をAntennaCSに変換(動径1)</summary>
+            <param name="Azimuth"></param>
+            <param name="Elevation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.Ludwig2_AzEl(MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>Ludwig2 Azimuth over Elevation(地平座標系)をAntennaCSに変換(動径1)</summary>
+            <param name="Azimuth"></param>
+            <param name="Elevation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.EauatorialCoordinateSystemAntenna(MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>赤道座標系(Epsilon-Alpha)をAntennaCSに変換(動径1)</summary>
+            <param name="Epsilon"></param>
+            <param name="Alpha"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.Ludwig2_EpsAlp(MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>Ludwig2 Epsilon over Alpha(赤道座標系)をAntennaCSに変換(動径1)</summary>
+            <param name="Epsilon"></param>
+            <param name="Alpha"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.Ludwig3(MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>Ludwig3(球面座標系)をAntennaCSに変換(動径1)</summary>
+            <param name="Fai"></param>
+            <param name="Theta"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.Approximately(System.Double,System.Double,System.UInt32)">
+            <summary>近似比較 有効桁まで同じであれば同一と判断する</summary>
+            <param name="dblA">数値A</param>
+            <param name="dblB">数値B</param>
+            <param name="SignificantDigits">有効桁数</param>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.DoubleToString(System.Double,System.UInt32)">
+            <summary>doubleを指定有効桁の文字列として取得(小数点以下で末尾側の0は省略する)</summary>
+            <param name="dbl">数値</param>
+            <param name="SignificantDigits">有効桁数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.AntennaCS.StrComp(System.String,System.String)">
+            <summary>文字列比較(大文字・小文字・半角・全角・ひらがな・カタカナを区別しない)</summary>
+            <param name="strA">文字列A</param>
+            <param name="strB">文字列B</param>
+            <returns>真偽</returns>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.AntennaPatternCoordinateSystem.Gain">
+            <summary>複素利得</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.AntennaPatternCoordinateSystem.DirectionAngle">
+            <summary>方向偏角</summary>
+        </member>
+        <member name="T:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna">
+            <summary>
+            アンテナ指向性座標系
+            </summary>
+        </member>
+        <member name="F:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.directionAngle">
+            <summary>直交座標(方向値、動径R=1)</summary>
+        </member>
+        <member name="P:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.Gain">
+            <summary>アンテナ利得</summary>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.#ctor(MWComLibCS.ComplexAngle,MWComLibCS.Angle,MWComLibCS.Angle,System.Nullable{System.Boolean})">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="AntennaGain">利得</param>
+            <param name="AzimuthAngle">方位角(Phi / Azimuth / Epsilon)</param>
+            <param name="PolarAngle">極角(Theta / Elevation / Alpha)</param>
+            <param name="CoordinateSystem">座標系(null:球面座標系Phi-Theta / true:地平座標系Azimuth-Elevation / false:赤道座標系Epsilon-Alpha)</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.Ludwig2_AzEl(System.Boolean,System.Boolean,MWComLibCS.Angle@,MWComLibCS.Angle@)" -->
+        <!-- Badly formed XML comment ignored for member "M:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.Ludwig2_EpsAlp(System.Boolean,System.Boolean,MWComLibCS.Angle@,MWComLibCS.Angle@)" -->
+        <!-- Badly formed XML comment ignored for member "M:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.Ludwig3(System.Boolean,System.Boolean,MWComLibCS.Angle@,MWComLibCS.Angle@)" -->
+        <!-- Badly formed XML comment ignored for member "M:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.DirectionAngle(System.Nullable{System.Boolean},System.Boolean,System.Boolean,MWComLibCS.Angle@,MWComLibCS.Angle@)" -->
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.Ludwig2_AzEl(MWComLibCS.ComplexAngle,MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>Ludwig2 Azimuth over Elevation(地平座標系)をAntennaCSに変換</summary>
+            <param name="AntennaGain">利得</param>
+            <param name="Azimuth">方位角(Azimuth)</param>
+            <param name="Elevation">仰角(Elevation)</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.Ludwig2_EpsAlp(MWComLibCS.ComplexAngle,MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>Ludwig2 Epsilon over Alpha(赤道座標系)をAntennaCSに変換</summary>
+            <param name="AntennaGain">利得</param>
+            <param name="Epsilon">赤緯(Epsilon)</param>
+            <param name="Alpha">赤経(Alpha)</param>
+            <returns></returns>
+        </member>
+        <member name="M:MWComLibCS.CoordinateSystem.CoordinateSystemAntenna.Ludwig3(MWComLibCS.ComplexAngle,MWComLibCS.Angle,MWComLibCS.Angle)">
+            <summary>Ludwig3(球面座標系)をAntennaCSに変換</summary>
+            <param name="AntennaGain">利得</param>
+            <param name="Phi">方位角(Phi)</param>
+            <param name="Theta">極角(Theta)</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using MWComLibCS.CoordinateSystem;
+using MWComLibCS;
 
 namespace POS_Emulator
 {
@@ -33,6 +35,10 @@ namespace POS_Emulator
         private DateTime _kmlExNOW;
         private bool _kmlExTASKstate;
         private Task _kmlExTASK;
+        private double targLatitude = 0;
+        private double targLongitude = 0;
+        private double targAltitude = 0;
+        private bool? coordSYS = true;
 
         public winMain()
         {
@@ -70,23 +76,17 @@ namespace POS_Emulator
             TEXTBOX_LongAccel.Value = Properties.Settings.Default.posLongAccel;
             TEXTBOX_TranAccel.Value = Properties.Settings.Default.posTranAccel;
             TEXTBOX_DownAccel.Value = Properties.Settings.Default.posDownAccel;
+            targLongitude = Settings.Default.targLongitude;
+            targLatitude = Settings.Default.targLatitude;
+            targAltitude = Settings.Default.targAltitude;
             this.Title += " Ver," + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
 
             _kmlPath = "";
             _logView = false;
             MainGRID.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Star);
             MainGRID.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
-            switch (SerialReOpen())
-            {
-                case true:
-                    POS_OUTPUT_TASK_Start();
-                    break;
-                case false:
-                    this.Close();
-                    return;
-                default:
-                    break;
-            }
+            if (SerialReOpen() == false) { this.Close(); return; }
+            POS_OUTPUT_TASK_Start();
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
@@ -135,14 +135,14 @@ namespace POS_Emulator
             if (_logView)
             {
                 LOG_PLAY_TASK_Stop(true);
-                if (_posExTASKstate) { POS_OUTPUT_TASK_Stop(true); }
+                POS_OUTPUT_TASK_Stop(true);
                 _logDAT = null;
                 _logView = false;
                 OLF.Header = "Open Log File";
                 MainGRID.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Star);
                 MainGRID.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
                 MainGRID.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Pixel);
-                if (_serial?.IsOpen == true) { POS_OUTPUT_TASK_Start(); }
+                POS_OUTPUT_TASK_Start();
             }
             else
             {
@@ -168,7 +168,7 @@ namespace POS_Emulator
                     MessageBox.Show("Failed to read file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                if (_posExTASKstate) { POS_OUTPUT_TASK_Stop(true); };
+                POS_OUTPUT_TASK_Stop(true);
                 _logDAT = dat;
                 MainGRID.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
                 MainGRID.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Star);
@@ -179,7 +179,7 @@ namespace POS_Emulator
                 LOGDATA_NOW.DATA = new POS.PAST2(_logDAT[(int)Math.Round(SLIDER.Value, MidpointRounding.AwayFromZero)]);
                 _logView = true;
                 OLF.Header = "Close Log File";
-                if (_serial?.IsOpen == true) { POS_OUTPUT_TASK_Start(); }
+                POS_OUTPUT_TASK_Start();
             }
         }
 
@@ -214,21 +214,15 @@ namespace POS_Emulator
 
         private void SerialConfig_Click(object sender, RoutedEventArgs e)
         {
-            if (_posExTASKstate) { POS_OUTPUT_TASK_Stop(true); }
+            POS_OUTPUT_TASK_Stop(true);
             if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
             winSettings win = new winSettings();
             win.ShowDialog();
-            switch (SerialReOpen())
-            {
-                case true:
-                    POS_OUTPUT_TASK_Start();
-                    break;
-                case false:
-                    this.Close();
-                    return;
-                default:
-                    break;
-            }
+            targLongitude = Settings.Default.targLongitude;
+            targLatitude = Settings.Default.targLatitude;
+            targAltitude = Settings.Default.targAltitude;
+            if (SerialReOpen() == false) { this.Close(); return; }
+            POS_OUTPUT_TASK_Start();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -237,7 +231,7 @@ namespace POS_Emulator
             {
                 KML_OUTPUT_TASK_Stop(false);
                 LOG_PLAY_TASK_Stop(false);
-                if (_posExTASKstate) { POS_OUTPUT_TASK_Stop(true); }
+                POS_OUTPUT_TASK_Stop(false);
                 if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
             }
             catch { }
@@ -283,11 +277,55 @@ namespace POS_Emulator
                         LABEL_Time.Content = day.ToString("0") + "day " + hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00.000000");
                     }));
                 }
+
+                double corrLatitude = 0;
+                double corrLongitude = 0;
+                double corrAltitude = 0;
+                double corrRoll = 0;
+                double corrPitch = 0;
+                double corrHeading = 0;
+                double corrAz = 0;
+                double corrPol = 0;
+                double trackCalc_az;
+                double trackCalc_pol;
+                if (dat.DATA != null)
+                {
+                    Angle pos_longitude = Angle.AngleSec(dat.LONGITUDE) + Angle.AngleDeg(corrLongitude);
+                    Angle pos_latitude = Angle.AngleSec(dat.LATITUDE) + Angle.AngleDeg(corrLatitude);
+                    double pos_altitude = dat.ALTITUDE + corrAltitude;
+                    Angle pos_rollOFFSET = Angle.AngleDeg(dat.ROLL + corrRoll);
+                    Angle pos_pitchOFFSET = Angle.AngleDeg(dat.PITCH + corrPitch);
+                    Angle pos_headingOFFSET = Angle.AngleDeg(dat.HEADING + corrHeading);
+                    WGS84CS target = new WGS84CS(Angle.AngleDeg(targLongitude), Angle.AngleDeg(targLatitude), targAltitude);
+                    WGS84CS pos = new WGS84CS(pos_longitude, pos_latitude, pos_altitude);
+                    OrthogonalCS enu = WGS84CS.ENU(pos, target);
+                    OrthogonalCS targNWU = new OrthogonalCS(enu.Y, -enu.X, enu.Z);
+                    OrthogonalCS targCalc = AxisRotation.RotateX(-pos_rollOFFSET, AxisRotation.RotateY(pos_pitchOFFSET, AxisRotation.RotateZ(pos_headingOFFSET, targNWU)));
+                    OrthogonalCS targetCalcOffset = new OrthogonalCS(-targCalc.X, -targCalc.Y, -targCalc.Z);
+
+                    CoordinateSystem3D targCalc3D = new CoordinateSystem3D(targetCalcOffset);
+                    AntennaCS targCalcANT = new AntennaCS(targCalc3D.Phi, targCalc3D.Theta, null);
+                    Angle targCalcAngle_az, targCalcAngle_pol;
+
+                    if (targCalcANT.NormalizedAngle(coordSYS, out targCalcAngle_az, out targCalcAngle_pol))
+                    {
+                        trackCalc_az = Angle.Normalize180(targCalcAngle_az).Degree + corrAz;
+                        trackCalc_pol = Angle.Normalize180(targCalcAngle_pol).Degree + corrPol;
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            TargLabel_Az.Content = trackCalc_az.ToString("0.0000").PadLeft(9, ' ');
+                            TargLabel_El.Content = trackCalc_pol.ToString("0.0000").PadLeft(9, ' ');
+                        }));
+                    }
+                }
+
+
+
                 try
                 {
-                    _serial.Write(dat.DATA, 0, dat.DATA.Count());
+                    if (_serial?.IsOpen == true) { _serial.Write(dat.DATA, 0, dat.DATA.Count()); }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     if (MessageBox.Show("Serial Port Error.\n" + ex.Message + "\nClose the app?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                     {
@@ -295,7 +333,7 @@ namespace POS_Emulator
                         return;
                     }
                 }
-                while(_posExTASKstate && (DateTime.Now - _posExNOW) < TimeSpan.FromMilliseconds(cycle)) { Thread.Sleep(taskLoopSleep); }
+                while (_posExTASKstate && (DateTime.Now - _posExNOW) < TimeSpan.FromMilliseconds(cycle)) { Thread.Sleep(taskLoopSleep); }
             }
         }
 
