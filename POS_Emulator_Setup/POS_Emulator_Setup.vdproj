@@ -50,6 +50,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -74,6 +82,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -213,15 +229,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:POS_Emulator"
-        "ProductCode" = "8:{585521F6-E683-40B8-B050-D8F3ACCD4756}"
-        "PackageCode" = "8:{580A9043-B254-47C3-8CDA-DA97ED57546D}"
+        "ProductCode" = "8:{0D255768-E6BB-41C2-97B6-DDB713A398A6}"
+        "PackageCode" = "8:{AA07BE55-A996-4023-AEF8-FBEFF062B127}"
         "UpgradeCode" = "8:{71ED0B81-8DC6-4AC5-85B4-8660AED69CCE}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.1"
+        "ProductVersion" = "8:1.1.0"
         "Manufacturer" = "8:OrientMicrowaveCorp."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -763,7 +779,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C110562EC4F64B7CB454DFBE2702906A"
             {
-            "SourcePath" = "8:..\\POS_Emulator\\obj\\Debug\\POS_Emulator.exe"
+            "SourcePath" = "8:..\\POS_Emulator\\obj\\Release\\POS_Emulator.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1627047E331D491380427EC7B7784296"
