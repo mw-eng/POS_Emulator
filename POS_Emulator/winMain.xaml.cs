@@ -45,7 +45,6 @@ namespace POS_Emulator
             Properties.Settings.Default.Reset();
             this.Title += "_DEBUG MODE";
 #endif
-            if (!SerialReOpen()) { this.Close(); return; }
             TEXTBOX_Roll.MinimumValue = -180;
             TEXTBOX_Roll.MaximumValue = 180;
             TEXTBOX_Pitch.MinimumValue = -180;
@@ -77,7 +76,17 @@ namespace POS_Emulator
             _logView = false;
             MainGRID.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Star);
             MainGRID.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Star);
-            POS_OUTPUT_TASK_Start();
+            switch (SerialReOpen())
+            {
+                case true:
+                    POS_OUTPUT_TASK_Start();
+                    break;
+                case false:
+                    this.Close();
+                    return;
+                default:
+                    break;
+            }
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
@@ -126,14 +135,14 @@ namespace POS_Emulator
             if (_logView)
             {
                 LOG_PLAY_TASK_Stop(true);
-                POS_OUTPUT_TASK_Stop(true);
+                if (_posExTASKstate) { POS_OUTPUT_TASK_Stop(true); }
                 _logDAT = null;
                 _logView = false;
                 OLF.Header = "Open Log File";
                 MainGRID.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Star);
                 MainGRID.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
                 MainGRID.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Pixel);
-                POS_OUTPUT_TASK_Start();
+                if (_serial?.IsOpen == true) { POS_OUTPUT_TASK_Start(); }
             }
             else
             {
@@ -159,7 +168,7 @@ namespace POS_Emulator
                     MessageBox.Show("Failed to read file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                POS_OUTPUT_TASK_Stop(true);
+                if (_posExTASKstate) { POS_OUTPUT_TASK_Stop(true); };
                 _logDAT = dat;
                 MainGRID.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
                 MainGRID.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Star);
@@ -170,7 +179,7 @@ namespace POS_Emulator
                 LOGDATA_NOW.DATA = new POS.PAST2(_logDAT[(int)Math.Round(SLIDER.Value, MidpointRounding.AwayFromZero)]);
                 _logView = true;
                 OLF.Header = "Close Log File";
-                POS_OUTPUT_TASK_Start();
+                if (_serial?.IsOpen == true) { POS_OUTPUT_TASK_Start(); }
             }
         }
 
@@ -205,12 +214,21 @@ namespace POS_Emulator
 
         private void SerialConfig_Click(object sender, RoutedEventArgs e)
         {
-            POS_OUTPUT_TASK_Stop(true);
+            if (_posExTASKstate) { POS_OUTPUT_TASK_Stop(true); }
             if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
             winSettings win = new winSettings();
             win.ShowDialog();
-            if (!SerialReOpen()) { this.Close(); return; }
-            POS_OUTPUT_TASK_Start();
+            switch (SerialReOpen())
+            {
+                case true:
+                    POS_OUTPUT_TASK_Start();
+                    break;
+                case false:
+                    this.Close();
+                    return;
+                default:
+                    break;
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -219,7 +237,7 @@ namespace POS_Emulator
             {
                 KML_OUTPUT_TASK_Stop(false);
                 LOG_PLAY_TASK_Stop(false);
-                POS_OUTPUT_TASK_Stop(false);
+                if (_posExTASKstate) { POS_OUTPUT_TASK_Stop(true); }
                 if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
             }
             catch { }
@@ -373,7 +391,7 @@ namespace POS_Emulator
             }
         }
 
-        private bool SerialReOpen()
+        private bool? SerialReOpen()
         {
             if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
             ShowSerialPortName.SerialPortTable sp;
@@ -385,6 +403,7 @@ namespace POS_Emulator
                 }
                 else
                 {
+                    if (MessageBox.Show("Do you want to use the app without outputting POS signals from the serial port?", "Question", MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes) { return null; }
                     winSettings win = new winSettings();
                     win.ShowDialog();
                     return SerialReOpen();
@@ -415,6 +434,7 @@ namespace POS_Emulator
                 }
                 else
                 {
+                    if (MessageBox.Show("Do you want to use the app without outputting POS signals from the serial port?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes) { return null; }
                     winSettings win = new winSettings();
                     win.ShowDialog();
                     return SerialReOpen();
