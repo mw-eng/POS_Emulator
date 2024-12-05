@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using POS_Emulator.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -76,11 +75,13 @@ namespace POS_Emulator
             TEXTBOX_LongAccel.Value = Properties.Settings.Default.posLongAccel;
             TEXTBOX_TranAccel.Value = Properties.Settings.Default.posTranAccel;
             TEXTBOX_DownAccel.Value = Properties.Settings.Default.posDownAccel;
-            targLongitude = Settings.Default.targLongitude;
-            targLatitude = Settings.Default.targLatitude;
-            targAltitude = Settings.Default.targAltitude;
+            targLongitude = Properties.Settings.Default.targLongitude;
+            targLatitude = Properties.Settings.Default.targLatitude;
+            targAltitude = Properties.Settings.Default.targAltitude;
             this.Title += " Ver," + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
-
+            this.Topmost = Properties.Settings.Default.topMost;
+            if (Properties.Settings.Default.topMost) { FixedInForeground.IsChecked = true; }
+            else { FixedInForeground.IsChecked = false; }
             _kmlPath = "";
             _logView = false;
             MainGRID.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Star);
@@ -218,15 +219,22 @@ namespace POS_Emulator
             if (_serial?.IsOpen == true) { _serial.Close(); _serial = null; }
             winSettings win = new winSettings();
             win.ShowDialog();
-            targLongitude = Settings.Default.targLongitude;
-            targLatitude = Settings.Default.targLatitude;
-            targAltitude = Settings.Default.targAltitude;
+            targLongitude = Properties.Settings.Default.targLongitude;
+            targLatitude = Properties.Settings.Default.targLatitude;
+            targAltitude = Properties.Settings.Default.targAltitude;
             if (SerialReOpen() == false) { this.Close(); return; }
             POS_OUTPUT_TASK_Start();
         }
 
+        private void FixedInForeground_Click(object sender, RoutedEventArgs e)
+        {
+            if (FixedInForeground.IsChecked == true) { this.Topmost = true; }
+            else { this.Topmost = false; }
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Properties.Settings.Default.topMost = this.Topmost;
             try
             {
                 KML_OUTPUT_TASK_Stop(false);
@@ -318,8 +326,6 @@ namespace POS_Emulator
                         }));
                     }
                 }
-
-
 
                 try
                 {
@@ -419,8 +425,8 @@ namespace POS_Emulator
                 {
                     kml.Write(KML.Header(_kmlPath));
                     kml.Write(KML.AirPlaneMarker(0, "Position", "", Colors.Red, 1, heading, longitude, latitude, altitude, true));
-                    kml.Write(KML.TargetCrossMarker(1, "Target", "", Colors.Red, 1, Settings.Default.targLongitude, Settings.Default.targLatitude, Settings.Default.targAltitude, true));
-                    kml.Write(KML.Line(2, "TARGET LINE", "", Colors.Red, 3, new List<KML.POSITION> { new KML.POSITION(longitude, latitude,altitude), new KML.POSITION(Settings.Default.targLongitude, Settings.Default.targLatitude, Settings.Default.targAltitude) }));
+                    kml.Write(KML.TargetCrossMarker(1, "Target", "", Colors.Red, 1, Properties.Settings.Default.targLongitude, Properties.Settings.Default.targLatitude, Properties.Settings.Default.targAltitude, true));
+                    kml.Write(KML.Line(2, "TARGET LINE", "", Colors.Red, 3, new List<KML.POSITION> { new KML.POSITION(longitude, latitude,altitude), new KML.POSITION(Properties.Settings.Default.targLongitude, Properties.Settings.Default.targLatitude, Properties.Settings.Default.targAltitude) }));
                     kml.Write(KML.Footer());
                     kml.Close();
                     kml.Dispose();

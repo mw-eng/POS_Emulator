@@ -15,6 +15,7 @@
             </MenuItem>
             <MenuItem Header="Tool">
                 <MenuItem Header="Serial Config" Click="SerialConfig_Click"/>
+                <MenuItem Header="Fixed in foreground" IsCheckable="True" x:Name="FixedInForeground" Click="FixedInForeground_Click"/>
             </MenuItem>
         </Menu>
         <Grid DockPanel.Dock="Bottom" x:Name="MainGRID">

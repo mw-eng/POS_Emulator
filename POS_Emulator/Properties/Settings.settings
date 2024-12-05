@@ -53,5 +53,8 @@
     <Setting Name="targAltitude" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1666.6</Value>
     </Setting>
+    <Setting Name="topMost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
