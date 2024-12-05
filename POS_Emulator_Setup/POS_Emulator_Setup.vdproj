@@ -229,15 +229,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:POS_Emulator"
-        "ProductCode" = "8:{6E4D2487-C634-40F5-94E8-62C707D192D4}"
-        "PackageCode" = "8:{2B8BA5B2-D82F-4B78-A76B-498E68FA74F0}"
+        "ProductCode" = "8:{2F2C0F25-BA43-443F-BBE2-6BA6C5B5CA07}"
+        "PackageCode" = "8:{6F7259D8-F626-4FD7-810F-7D07546E622D}"
         "UpgradeCode" = "8:{71ED0B81-8DC6-4AC5-85B4-8660AED69CCE}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.2"
+        "ProductVersion" = "8:1.1.3"
         "Manufacturer" = "8:OrientMicrowaveCorp."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -779,7 +779,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C110562EC4F64B7CB454DFBE2702906A"
             {
-            "SourcePath" = "8:..\\POS_Emulator\\obj\\Debug\\POS_Emulator.exe"
+            "SourcePath" = "8:..\\POS_Emulator\\obj\\Release\\POS_Emulator.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1627047E331D491380427EC7B7784296"

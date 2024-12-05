@@ -327,7 +327,10 @@ namespace POS_Emulator
                         }));
                     }
                 }
-
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    DatLabel.Content = BitConverter.ToString(dat.DATA);
+                }));
                 try
                 {
                     if (_serial?.IsOpen == true) { _serial.Write(dat.DATA, 0, dat.DATA.Count()); }

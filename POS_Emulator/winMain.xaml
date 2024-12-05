@@ -24,6 +24,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" x:Name="ViewerGRID">
                 <local:cntPOS Margin="5" x:Name="LOGDATA_NOW"/>
@@ -144,6 +145,9 @@
                     <Viewbox Grid.Column="0"><Label Content="Elevation [deg]"/></Viewbox>
                     <Viewbox Grid.Column="1"><Label Content="ND" x:Name="TargLabel_El"/></Viewbox>
                 </Grid>
+            </Grid>
+            <Grid Grid.Row="4" x:Name="DatGRID">
+                <Viewbox Margin="5"><Label Content="ND" x:Name="DatLabel"/></Viewbox>
             </Grid>
         </Grid>
     </DockPanel>
