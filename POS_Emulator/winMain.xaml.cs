@@ -235,6 +235,7 @@ namespace POS_Emulator
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Properties.Settings.Default.topMost = this.Topmost;
+            Properties.Settings.Default.Save();
             try
             {
                 KML_OUTPUT_TASK_Stop(false);

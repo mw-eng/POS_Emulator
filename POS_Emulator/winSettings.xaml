@@ -29,7 +29,7 @@
             <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Cycle"/></Viewbox>
             <Viewbox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left"><Label Content="Target"/></Viewbox>
             <Viewbox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" >
-                <ComboBox MinWidth="260" x:Name="COMBOBOX_SerialPort" Margin="5" VerticalContentAlignment="Center" DropDownOpened="COMBOBOX_SerialPort_DropDownOpened" DropDownClosed="COMBOBOX_SerialPort_DropDownClosed"/>
+                <ComboBox MinWidth="260" x:Name="COMBOBOX_SerialPort" Margin="5" VerticalContentAlignment="Center" DropDownOpened="COMBOBOX_SerialPort_DropDownOpened"/>
             </Viewbox>
             <Viewbox Grid.Row="1" Grid.Column="1"><local:cntTextBoxLong x:Name="TEXTBOX_BaudRate" MinWidth="130"/></Viewbox>
             <Viewbox Grid.Row="2" Grid.Column="1"><local:cntTextBoxLong x:Name="TEXTBOX_Cycle" MinWidth="130"/></Viewbox>

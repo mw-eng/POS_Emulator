@@ -55,7 +55,6 @@ namespace POS_Emulator
                     { COMBOBOX_SerialPort.SelectedIndex = i; break; }
                 }
             }
-            if(COMBOBOX_SerialPort.SelectedIndex < 0) { OK_BUTTON.IsEnabled = false; }
         }
 
         private void COMBOBOX_SerialPort_RELOAD(object sender, EventArgs e)
@@ -88,15 +87,6 @@ namespace POS_Emulator
         private void COMBOBOX_SerialPort_DropDownOpened(object sender, EventArgs e)
         {
             COMBOBOX_SerialPort_RELOAD(sender, e);
-        }
-
-        private void COMBOBOX_SerialPort_DropDownClosed(object sender, EventArgs e)
-        {
-            if (COMBOBOX_SerialPort.SelectedIndex >= 0 &&
-                COMBOBOX_SerialPort.Text.Replace(" ", "").Length > 0
-                )
-            { OK_BUTTON.IsEnabled = true; }
-            else { OK_BUTTON.IsEnabled = false; }
         }
 
     }
